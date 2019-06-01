@@ -22,8 +22,8 @@ public:
 //std::cout<<practiceLinearList.DeleteMinValue()<<std::endl;
 //practiceLinearList.PrintList();
 /// \tparam DataType 线性表数据类型
-/// \return 返回被删除的值，若删除失败返回0
-template<typename DataType>
+/// \return 返回被删除的值
+template <typename DataType>
 DataType PracticeLinearList<DataType>::DeleteMinValue() {
     if(this->linear_list_length<=0)
         throw "Underflow";
@@ -39,5 +39,6 @@ DataType PracticeLinearList<DataType>::DeleteMinValue() {
     return minValue;
 }
 
+template <typename DataType>
 
 #endif //STLLEARN_PRACTICELINEARLIST_H
