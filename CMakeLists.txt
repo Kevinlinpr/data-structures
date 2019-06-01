@@ -3,4 +3,4 @@ project(STLLearn)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(STLLearn main.cpp LinearList.cpp LinearList.h LinearListPractice.cpp LinearListPractice.h)
+add_executable(STLLearn main.cpp LinearList.cpp LinearList.h PracticeLinearList.cpp PracticeLinearList.h)

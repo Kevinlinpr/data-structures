@@ -1,6 +1,5 @@
 #include <iostream>
-#include "LinearListPractice.h"
-
+#include "PracticeLinearList.h"
 int main(){
 
 }

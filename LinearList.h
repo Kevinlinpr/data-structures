@@ -6,7 +6,7 @@
 #define STLLEARN_LINEARLIST_H
 
 #include <iostream>
-const int MAXSIZE = 100;
+const int MAXSIZE = 10;
 template <typename DataType>
 class LinearList {
 public:
