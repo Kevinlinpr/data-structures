@@ -20,7 +20,6 @@ public:
     DataType ListDelete(int elem); //删除数据元素，返回操作结果bool
     void PrintList();   //打印线性表
     constexpr bool ListEmpty(){ return linear_list_length==0;}   //线性表是否为空
-private:
     DataType list[MAXSIZE];
     int linear_list_length = 0;
 };
