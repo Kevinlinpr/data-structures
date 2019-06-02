@@ -81,7 +81,7 @@ DataType LinearList<DataType>::ListDelete(int elem) {
 
 template<typename DataType>
 void LinearList<DataType>::PrintList() {
-    for (int i = 0; i < linear_list_length - 1; ++i) {
+    for (int i = 0; i < linear_list_length; ++i) {
         std::cout<<"INDEX: "<<i<<" VALUE: "<<list[i]<<std::endl;
     }
 }
