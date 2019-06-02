@@ -12,14 +12,14 @@ public:
     PracticeLinearList(DataType data[],int length):LinearList<DataType>(data,length){};
     DataType DeleteMinValue();
     void Reverse();
-    void DeleteTargetValue(DataType target);
+    void Reverse(int firstIndex, int secondIndex);
+    void DeleteTargetValue(DataType targetValue);
     void DeleteOrderedRangeValue(DataType lowerBoundValue,DataType upperBoundValue);
     void DeleteDisorderedRangeValue(DataType lowerBoundValue,DataType upperBoundValue);
     void DeleteOrderedRepeatValue();
     static PracticeLinearList<DataType>& MergeTwoOrderedLinearList(const PracticeLinearList<DataType>& listA,
-            const PracticeLinearList<DataType>& listB);
-    static PracticeLinearList<DataType>& MergeTwoOrderedLinearList(const PracticeLinearList<DataType>& listA,
             const PracticeLinearList<DataType>& listB,PracticeLinearList<DataType>& resultList);
+    static void ExchangeMNList(PracticeLinearList<DataType>& list,int firstHalfAmount,int secondHalfAmount);
 
 };
 
@@ -62,7 +62,6 @@ void PracticeLinearList<DataType>::Reverse() {
         this->list[(this->linear_list_length - 1) - i] = this->list[i];
         this->list[i] = tmp;
     }
-    std::cout<<"Reserved..."<<std::endl;
 }
 
 
@@ -155,6 +154,14 @@ void PracticeLinearList<DataType>::DeleteOrderedRepeatValue() {
 }
 
 /// 将两个有序顺序表合并成一个新的有序顺序表，并由函数返回结果顺序表。
+//int a[9]={12,29,30,30,998,998,1200,1200,2900};
+//int b[6]={40,55,209,333,1000,3000};
+//int c[15];
+//PracticeLinearList<int> practiceLinearListA(a,9);
+//PracticeLinearList<int> practiceLinearListB(b,6);
+//PracticeLinearList<int> practiceLinearListC(c,15);
+//PracticeLinearList<int>::PrintList(PracticeLinearList<int>::MergeTwoOrderedLinearList(practiceLinearListA,practiceLinearListB,practiceLinearListC));
+//std::cout<<"end"<<std::endl;
 /// \tparam DataType
 /// \param listA
 /// \param listB
@@ -180,6 +187,46 @@ PracticeLinearList<DataType>::MergeTwoOrderedLinearList(const PracticeLinearList
         resultList.list[k++] = listB.list[j++];
     }
     return resultList;
+}
+
+
+/// 换位一个顺序表中前后两个区间内的元素
+//int a[9]={12,29,30,35,998,998,1200,1200,2900};
+//PracticeLinearList<int> practiceLinearListA(a,9);
+//PracticeLinearList<int>::ExchangeMNList(practiceLinearListA,5,4);
+//practiceLinearListA.PrintList();
+//std::cout<<"end"<<std::endl;
+/// \tparam DataType
+/// \param list
+/// \param firstHalfAmount
+/// \param secondHalfAmount
+template<typename DataType>
+void PracticeLinearList<DataType>::ExchangeMNList(PracticeLinearList<DataType> &list, int firstHalfAmount,
+                                                  int secondHalfAmount) {
+    if(firstHalfAmount+secondHalfAmount>list.linear_list_length)
+        throw "Wrong Size";
+    list.Reverse(0,firstHalfAmount-1);
+    list.Reverse(firstHalfAmount,firstHalfAmount+secondHalfAmount-1);
+    list.Reverse();
+}
+
+/// 倒置顺序表区间内（包含边界）
+//list.Reverse(0,firstHalfAmount-1);
+//list.Reverse(firstHalfAmount,firstHalfAmount+secondHalfAmount-1);
+/// \tparam DataType
+/// \param firstIndex
+/// \param secondIndex
+template<typename DataType>
+void PracticeLinearList<DataType>::Reverse(int firstIndex, int secondIndex) {
+    if((firstIndex>=secondIndex)
+    ||firstIndex<0
+    ||secondIndex>(this->linear_list_length-1))
+        throw "Wrong index";
+    for (int i = firstIndex; i < (secondIndex - firstIndex + 1) / 2 + firstIndex; ++i) {
+        DataType tmp = this->list[secondIndex-i+firstIndex];
+        this->list[secondIndex-i+firstIndex] = this->list[i];
+        this->list[i] = tmp;
+    }
 }
 
 
