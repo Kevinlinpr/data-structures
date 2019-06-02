@@ -12,6 +12,7 @@ public:
     PracticeLinearList(DataType data[],int length):LinearList<DataType>(data,length){};
     DataType DeleteMinValue();
     void Reverse();
+    void DeleteTargetValue(DataType target);
 
 };
 
@@ -55,6 +56,26 @@ void PracticeLinearList<DataType>::Reverse() {
         this->list[i] = tmp;
     }
     std::cout<<"Reserved..."<<std::endl;
+}
+
+
+/// 长度为n的顺序表L，编写一个时间复杂度为o(n),空间复杂度为o(1)的算法，该算法删除线性表中所有值为x的数据元素
+//int a[7]={122,29,30,564,699,998,699};
+//PracticeLinearList<int> practiceLinearList(a,7);
+//practiceLinearList.DeleteTargetValue(699);
+//practiceLinearList.PrintList();
+/// \tparam DataType 删除的数据元素
+/// \param target
+template<typename DataType>
+void PracticeLinearList<DataType>::DeleteTargetValue(DataType target) {
+    int not_target_amount = 0;
+    for (int i = 0; i < this->linear_list_length; ++i) {
+        if(this->list[i]!=target){
+            this->list[not_target_amount] = this->list[i];
+            ++not_target_amount;
+        }
+    }
+    this->linear_list_length = not_target_amount;
 }
 
 
