@@ -16,6 +16,11 @@ public:
     void DeleteOrderedRangeValue(DataType lowerBoundValue,DataType upperBoundValue);
     void DeleteDisorderedRangeValue(DataType lowerBoundValue,DataType upperBoundValue);
     void DeleteOrderedRepeatValue();
+    static PracticeLinearList<DataType>& MergeTwoOrderedLinearList(const PracticeLinearList<DataType>& listA,
+            const PracticeLinearList<DataType>& listB);
+    static PracticeLinearList<DataType>& MergeTwoOrderedLinearList(const PracticeLinearList<DataType>& listA,
+            const PracticeLinearList<DataType>& listB,PracticeLinearList<DataType>& resultList);
+
 };
 
 /// 从顺序表中删除具有最小值的元素（假设唯一）并由函数返回被删除元素的值。空出的位置由最后一个元素填补，
@@ -147,6 +152,34 @@ void PracticeLinearList<DataType>::DeleteOrderedRepeatValue() {
             this->list[++i] = this->list[j];
     }
     this->linear_list_length = i + 1;
+}
+
+/// 将两个有序顺序表合并成一个新的有序顺序表，并由函数返回结果顺序表。
+/// \tparam DataType
+/// \param listA
+/// \param listB
+/// \param resultList
+/// \return
+template<typename DataType>
+PracticeLinearList<DataType>&
+PracticeLinearList<DataType>::MergeTwoOrderedLinearList(const PracticeLinearList<DataType> &listA,
+                                                             const PracticeLinearList<DataType> &listB,
+                                                             PracticeLinearList<DataType> &resultList) {
+    int i = 0,j = 0,k = 0;
+    while(i<listA.linear_list_length&&j<listB.linear_list_length){
+        if(listA.list[i]<=listB.list[j]){
+            resultList.list[k++] = listA.list[i++];
+        } else{
+            resultList.list[k++] = listB.list[j++];
+        }
+    }
+    while(i<listA.linear_list_length){
+        resultList.list[k++] = listA.list[i++];
+    }
+    while(j<listB.linear_list_length){
+        resultList.list[k++] = listB.list[j++];
+    }
+    return resultList;
 }
 
 

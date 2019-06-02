@@ -6,7 +6,7 @@
 #define STLLEARN_LINEARLIST_H
 
 #include <iostream>
-const int MAXSIZE = 10;
+const int MAXSIZE = 100;
 template <typename DataType>
 class LinearList {
 public:
@@ -19,6 +19,7 @@ public:
     void ListInsert(int elem,DataType value); //插入数据元素
     DataType ListDelete(int elem); //删除数据元素，返回操作结果bool
     void PrintList();   //打印线性表
+    static void PrintList(LinearList<DataType> list);
     constexpr bool ListEmpty(){ return linear_list_length==0;}   //线性表是否为空
     DataType list[MAXSIZE];
     int linear_list_length = 0;
@@ -83,6 +84,13 @@ template<typename DataType>
 void LinearList<DataType>::PrintList() {
     for (int i = 0; i < linear_list_length; ++i) {
         std::cout<<"INDEX: "<<i<<" VALUE: "<<list[i]<<std::endl;
+    }
+}
+
+template<typename DataType>
+void LinearList<DataType>::PrintList(LinearList<DataType> list) {
+    for (int i = 0; i < list.linear_list_length; ++i) {
+        std::cout<<"INDEX: "<<i<<" VALUE: "<<list.list[i]<<std::endl;
     }
 }
 
