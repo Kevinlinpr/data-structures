@@ -15,6 +15,7 @@ public:
     void DeleteTargetValue(DataType target);
     void DeleteOrderedRangeValue(DataType lowerBoundValue,DataType upperBoundValue);
     void DeleteDisorderedRangeValue(DataType lowerBoundValue,DataType upperBoundValue);
+    void DeleteOrderedRepeatValue();
 };
 
 /// 从顺序表中删除具有最小值的元素（假设唯一）并由函数返回被删除元素的值。空出的位置由最后一个元素填补，
@@ -134,6 +135,18 @@ void PracticeLinearList<DataType>::DeleteDisorderedRangeValue(DataType lowerBoun
         }
     }
     this->linear_list_length = not_rangeValue_amount;
+}
+
+/// 从有序顺序表中删除所有其值重复的元素，使表中所有元素的值均不同
+/// \tparam DataType
+template<typename DataType>
+void PracticeLinearList<DataType>::DeleteOrderedRepeatValue() {
+    int i , j;
+    for (i = 0 , j = 1; j < this->linear_list_length; ++j) {
+        if(this->list[i]!=this->list[j])
+            this->list[++i] = this->list[j];
+    }
+    this->linear_list_length = i + 1;
 }
 
 
