@@ -20,6 +20,7 @@ public:
     static PracticeLinearList<DataType>& MergeTwoOrderedLinearList(const PracticeLinearList<DataType>& listA,
             const PracticeLinearList<DataType>& listB,PracticeLinearList<DataType>& resultList);
     static void ExchangeMNList(PracticeLinearList<DataType>& list,int firstHalfAmount,int secondHalfAmount);
+    static void SpeedFind(PracticeLinearList& list,DataType targetValue);
 
 };
 
@@ -226,6 +227,47 @@ void PracticeLinearList<DataType>::Reverse(int firstIndex, int secondIndex) {
         DataType tmp = this->list[secondIndex-i+firstIndex];
         this->list[secondIndex-i+firstIndex] = this->list[i];
         this->list[i] = tmp;
+    }
+}
+
+/// 线性表中元素递增有序且按顺序存储于计算机内。要求设计一算法完成用最少时间在表中查找数值为x的元素，若找到将其与后继元素位置相交换，
+/// 若找不到将其插入表中并使表元素仍递增有序。
+//int a[9]={12,29,30,35,998,998,1200,1200,2900};
+//PracticeLinearList<int> practiceLinearListA(a,9);
+//practiceLinearListA.PrintList();
+//PracticeLinearList<int>::SpeedFind(practiceLinearListA,30);
+//practiceLinearListA.PrintList();
+//std::cout<<"end"<<std::endl;
+/// \tparam DataType
+/// \param list
+/// \param targetValue
+template<typename DataType>
+void PracticeLinearList<DataType>::SpeedFind(PracticeLinearList& list, DataType targetValue) {
+    std::cout<<"Speed Find"<<std::endl;
+    int beginIndex = 0,endIndex = list.linear_list_length - 1,mid = 0;
+    while(beginIndex<=endIndex){
+        mid = (beginIndex+endIndex)/2;
+        if(list.list[mid]==targetValue)
+            break;
+        else if(targetValue<list.list[mid])
+            endIndex = mid - 1;
+        else if(list.list[mid]<targetValue)
+            beginIndex = mid + 1;
+
+    }
+    if(list.list[mid]==targetValue&&mid!=(list.linear_list_length-1)){
+        DataType tmp = list.list[mid+1];
+        list.list[mid+1] = list.list[mid];
+        list.list[mid] = tmp;
+    }
+
+    if(endIndex<beginIndex){
+        ++list.linear_list_length;
+        int i;
+        for (i = list.linear_list_length - 1; i > endIndex ; --i) {
+            list.list[i+1] = list.list[i];
+        }
+        list.list[i+1] = targetValue;
     }
 }
 
