@@ -42,14 +42,19 @@ DataType PracticeLinearList<DataType>::DeleteMinValue() {
 
 
 /// 设计一个高效的算法，将顺序表的所有元素逆置，要求算法的空间复杂度为O(1)
+//int a[6]={122,29,30,564,699,998};
+//PracticeLinearList<int> practiceLinearList(a,6);
+//practiceLinearList.Reverse();
+//practiceLinearList.PrintList();
 /// \tparam DataType
 template<typename DataType>
 void PracticeLinearList<DataType>::Reverse() {
-    for (int i = 0; i < (this->linear_list_length - 1) / 2; ++i) {
-        DataType tmp = this->list[this->linear_list_length - 1];
-        this->list[(this->linear_list_length - i + 1) - 1] = this->list[i];
+    for (int i = 0; i < this->linear_list_length / 2; ++i) {
+        DataType tmp = this->list[(this->linear_list_length - 1) - i];
+        this->list[(this->linear_list_length - 1) - i] = this->list[i];
         this->list[i] = tmp;
     }
+    std::cout<<"Reserved..."<<std::endl;
 }
 
 
