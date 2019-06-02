@@ -11,6 +11,7 @@ class PracticeLinearList : public LinearList<DataType> {
 public:
     PracticeLinearList(DataType data[],int length):LinearList<DataType>(data,length){};
     DataType DeleteMinValue();
+    void Reverse();
 
 };
 
@@ -39,6 +40,17 @@ DataType PracticeLinearList<DataType>::DeleteMinValue() {
     return minValue;
 }
 
-template <typename DataType>
+
+/// 设计一个高效的算法，将顺序表的所有元素逆置，要求算法的空间复杂度为O(1)
+/// \tparam DataType
+template<typename DataType>
+void PracticeLinearList<DataType>::Reverse() {
+    for (int i = 0; i < (this->linear_list_length - 1) / 2; ++i) {
+        DataType tmp = this->list[this->linear_list_length - 1];
+        this->list[(this->linear_list_length - i + 1) - 1] = this->list[i];
+        this->list[i] = tmp;
+    }
+}
+
 
 #endif //STLLEARN_PRACTICELINEARLIST_H
