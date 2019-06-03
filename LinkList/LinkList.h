@@ -1,5 +1,5 @@
 //
-// Created by 唐茂凡 on 3/6/19.
+// Created by Kevinlinpr on 3/6/19.
 //
 
 #ifndef STLLEARN_LINKLIST_H
@@ -17,17 +17,17 @@ public:
     void PrintList() const;
     LNode<DataType>* GetElem(int loc) const;
     LNode<DataType>* LocateElem(int value) const;
+    void BeforeInsert(int insertLoc,LNode<DataType>& newNode);
+    void AfterInsert(int insertLoc,LNode<DataType>& newNode);
 private:
     LNode<DataType>* head;
-    int link_list_length;
+    int link_list_length{};
 };
 
 
 template<typename DataType>
 LinkList<DataType>::LinkList() {
-    head = new LNode<DataType>;
-    head->data = 0;
-    head->next = nullptr;
+    head = new LNode(0);
     this->link_list_length = 0;
 }
 /// 头查法创建单链表
@@ -45,7 +45,7 @@ LinkList<DataType> LinkList<DataType>::HeadInsertCreateList(const PracticeLinear
     LNode<DataType> *tmpNode = nullptr,*newNode = nullptr;
     this->link_list_length = linearList.linear_list_length;
     for (int i = 0; i < this->link_list_length; ++i) {
-        newNode = new LNode<DataType>;
+        newNode = new LNode(0);
         head->next = newNode;
         newNode->next = tmpNode;
         newNode->data = linearList.list[i];
@@ -71,7 +71,7 @@ LinkList<DataType> LinkList<DataType>::EndInsertCreateList(const PracticeLinearL
     this->link_list_length = linearList.linear_list_length;
     tmpNode = head;
     for (int i = 0; i < this->link_list_length; ++i) {
-        newNode = new LNode<DataType>;
+        newNode = new LNode(0);
         newNode->data = linearList.list[i];
         newNode->next = nullptr;
         tmpNode->next = newNode;
@@ -140,6 +140,50 @@ LNode<DataType> *LinkList<DataType>::LocateElem(int value) const {
         copNode = copNode->next;
     }
     return nullptr;
+}
+
+/// 前插
+//int a[9]={12,29,30,35,998,998,1200,1200,2900};
+//PracticeLinearList<int> practiceLinearListA(a,9);
+//LinkList<int> linkList;
+//linkList.EndInsertCreateList(practiceLinearListA);
+//linkList.PrintList();
+//LNode<int> node(38);
+//linkList.BeforeInsert(3,node);
+//linkList.PrintList();
+//std::cout<<"end"<<std::endl;
+/// \tparam DataType
+/// \param insertLoc
+/// \param newNode
+template<typename DataType>
+void LinkList<DataType>::BeforeInsert(int insertLoc,LNode<DataType>& newNode) {
+    LNode<DataType>* leftNode = this->GetElem(insertLoc-1);
+    LNode<DataType>* rightNode = leftNode->next;
+    leftNode->next = &newNode;
+    newNode.next = rightNode;
+    ++this->link_list_length;
+}
+
+/// 后插
+//int a[9]={12,29,30,35,998,998,1200,1200,2900};
+//PracticeLinearList<int> practiceLinearListA(a,9);
+//LinkList<int> linkList;
+//linkList.EndInsertCreateList(practiceLinearListA);
+//linkList.PrintList();
+//LNode<int> node(38);
+//linkList.AfterInsert(5,node);
+//linkList.PrintList();
+//std::cout<<"end"<<std::endl;
+/// \tparam DataType
+/// \param insertLoc
+/// \param newNode
+template<typename DataType>
+void LinkList<DataType>::AfterInsert(int insertLoc, LNode<DataType> &newNode) {
+    LNode<DataType>* leftNode = this->GetElem(insertLoc);
+    LNode<DataType>* rightNode = leftNode->next;
+    leftNode->next = &newNode;
+    newNode.next = rightNode;
+    ++this->link_list_length;
 }
 
 #endif //STLLEARN_LINKLIST_H

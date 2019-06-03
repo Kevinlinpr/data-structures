@@ -8,10 +8,8 @@ int main(){
     LinkList<int> linkList;
     linkList.EndInsertCreateList(practiceLinearListA);
     linkList.PrintList();
-    LNode<int>* node = linkList.LocateElem(13);
-    if(node)
-        std::cout<<"find it"<<std::endl;
-    else
-        std::cout<<"isn't there"<<std::endl;
+    LNode<int> node(38);
+    linkList.AfterInsert(5,node);
+    linkList.PrintList();
     std::cout<<"end"<<std::endl;
 }
