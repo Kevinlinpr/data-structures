@@ -5,7 +5,7 @@
 #ifndef STLLEARN_LNODE_H
 #define STLLEARN_LNODE_H
 
-template <typename DataType>
+template <class DataType>
 class LNode {
 public:
     LNode();
@@ -14,13 +14,13 @@ public:
     LNode* next;
 };
 
-template<typename DataType>
+template<class DataType>
 LNode<DataType>::LNode(DataType value) {
     data = value;
     next = nullptr;
 }
 
-template<typename DataType>
+template<class DataType>
 LNode<DataType>::LNode() {
     data = 0;
     next = nullptr;

@@ -6,7 +6,7 @@
 #define STLLEARN_PRACTICELINEARLIST_H
 
 #include "LinearList.h"
-template <typename DataType>
+template <class DataType>
 class PracticeLinearList : public LinearList<DataType> {
 public:
     PracticeLinearList(DataType data[],int length):LinearList<DataType>(data,length){};
@@ -33,7 +33,7 @@ public:
 //practiceLinearList.PrintList();
 /// \tparam DataType 线性表数据类型
 /// \return 返回被删除的值
-template <typename DataType>
+template <class DataType>
 DataType PracticeLinearList<DataType>::DeleteMinValue() {
     if(this->linear_list_length<=0)
         throw "Underflow";
@@ -56,7 +56,7 @@ DataType PracticeLinearList<DataType>::DeleteMinValue() {
 //practiceLinearList.Reverse();
 //practiceLinearList.PrintList();
 /// \tparam DataType
-template<typename DataType>
+template<class DataType>
 void PracticeLinearList<DataType>::Reverse() {
     for (int i = 0; i < this->linear_list_length / 2; ++i) {
         DataType tmp = this->list[(this->linear_list_length - 1) - i];
@@ -73,7 +73,7 @@ void PracticeLinearList<DataType>::Reverse() {
 //practiceLinearList.PrintList();
 /// \tparam DataType 删除的数据元素
 /// \param target
-template<typename DataType>
+template<class DataType>
 void PracticeLinearList<DataType>::DeleteTargetValue(DataType targetValue) {
     int not_targetValue_amount = 0;
     for (int i = 0; i < this->linear_list_length; ++i) {
@@ -93,7 +93,7 @@ void PracticeLinearList<DataType>::DeleteTargetValue(DataType targetValue) {
 /// \tparam DataType
 /// \param lowerBoundValue
 /// \param upperBoundValue
-template<typename DataType>
+template<class DataType>
 void PracticeLinearList<DataType>::DeleteOrderedRangeValue(DataType lowerBoundValue, DataType upperBoundValue) {
     if(this->linear_list_length<=0)
         throw "Underflow";
@@ -126,7 +126,7 @@ void PracticeLinearList<DataType>::DeleteOrderedRangeValue(DataType lowerBoundVa
 /// \tparam DataType
 /// \param lowerBoundValue
 /// \param upperBoundValue
-template<typename DataType>
+template<class DataType>
 void PracticeLinearList<DataType>::DeleteDisorderedRangeValue(DataType lowerBoundValue, DataType upperBoundValue) {
     if(this->linear_list_length<=0)
         throw "Underflow";
@@ -144,7 +144,7 @@ void PracticeLinearList<DataType>::DeleteDisorderedRangeValue(DataType lowerBoun
 
 /// 从有序顺序表中删除所有其值重复的元素，使表中所有元素的值均不同
 /// \tparam DataType
-template<typename DataType>
+template<class DataType>
 void PracticeLinearList<DataType>::DeleteOrderedRepeatValue() {
     int i , j;
     for (i = 0 , j = 1; j < this->linear_list_length; ++j) {
@@ -168,7 +168,7 @@ void PracticeLinearList<DataType>::DeleteOrderedRepeatValue() {
 /// \param listB
 /// \param resultList
 /// \return
-template<typename DataType>
+template<class DataType>
 PracticeLinearList<DataType>&
 PracticeLinearList<DataType>::MergeTwoOrderedLinearList(const PracticeLinearList<DataType> &listA,
                                                              const PracticeLinearList<DataType> &listB,
@@ -201,7 +201,7 @@ PracticeLinearList<DataType>::MergeTwoOrderedLinearList(const PracticeLinearList
 /// \param list
 /// \param firstHalfAmount
 /// \param secondHalfAmount
-template<typename DataType>
+template<class DataType>
 void PracticeLinearList<DataType>::ExchangeMNList(PracticeLinearList<DataType> &list, int firstHalfAmount,
                                                   int secondHalfAmount) {
     if(firstHalfAmount+secondHalfAmount>list.linear_list_length)
@@ -217,7 +217,7 @@ void PracticeLinearList<DataType>::ExchangeMNList(PracticeLinearList<DataType> &
 /// \tparam DataType
 /// \param firstIndex
 /// \param secondIndex
-template<typename DataType>
+template<class DataType>
 void PracticeLinearList<DataType>::Reverse(int firstIndex, int secondIndex) {
     if((firstIndex>=secondIndex)
     ||firstIndex<0
@@ -241,7 +241,7 @@ void PracticeLinearList<DataType>::Reverse(int firstIndex, int secondIndex) {
 /// \tparam DataType
 /// \param list
 /// \param targetValue
-template<typename DataType>
+template<class DataType>
 void PracticeLinearList<DataType>::SpeedFind(PracticeLinearList& list, DataType targetValue) {
     std::cout<<"Speed Find"<<std::endl;
     int beginIndex = 0,endIndex = list.linear_list_length - 1,mid = 0;

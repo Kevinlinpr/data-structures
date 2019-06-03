@@ -8,7 +8,7 @@
 #include "LNode.h"
 #include "../LinearList/PracticeLinearList.h"
 
-template <typename DataType>
+template <class DataType>
 class LinkList {
 public:
     LinkList();
@@ -26,7 +26,7 @@ private:
 };
 
 
-template<typename DataType>
+template<class DataType>
 LinkList<DataType>::LinkList() {
     head = new LNode(0);
     this->link_list_length = 0;
@@ -41,7 +41,7 @@ LinkList<DataType>::LinkList() {
 /// \tparam DataType
 /// \param linearList
 /// \return
-template<typename DataType>
+template<class DataType>
 LinkList<DataType> LinkList<DataType>::HeadInsertCreateList(const PracticeLinearList<DataType>& linearList) {
     LNode<DataType> *tmpNode = nullptr,*newNode = nullptr;
     this->link_list_length = linearList.linear_list_length;
@@ -66,7 +66,7 @@ LinkList<DataType> LinkList<DataType>::HeadInsertCreateList(const PracticeLinear
 /// \tparam DataType
 /// \param linearList
 /// \return
-template<typename DataType>
+template<class DataType>
 LinkList<DataType> LinkList<DataType>::EndInsertCreateList(const PracticeLinearList<DataType>& linearList) {
     LNode<DataType> *tmpNode = nullptr,*newNode = nullptr;
     this->link_list_length = linearList.linear_list_length;
@@ -82,7 +82,7 @@ LinkList<DataType> LinkList<DataType>::EndInsertCreateList(const PracticeLinearL
     return *this;
 }
 
-template<typename DataType>
+template<class DataType>
 void LinkList<DataType>::PrintList() const {
     LNode<DataType>* copeNode = this->head->next;
     for (int i = 0; i < this->link_list_length; ++i) {
@@ -104,7 +104,7 @@ void LinkList<DataType>::PrintList() const {
 /// \tparam DataType
 /// \param loc
 /// \return
-template<typename DataType>
+template<class DataType>
 LNode<DataType> *LinkList<DataType>::GetElem(int loc) const {
     LNode<DataType>* copeNode = this->head;
     if(loc>this->link_list_length||loc<0)
@@ -132,7 +132,7 @@ LNode<DataType> *LinkList<DataType>::GetElem(int loc) const {
 /// \tparam DataType
 /// \param value
 /// \return
-template<typename DataType>
+template<class DataType>
 LNode<DataType> *LinkList<DataType>::LocateElem(int value) const {
     LNode<DataType>* copNode = this->head->next;
     for (int i = 0; i < this->link_list_length; ++i) {
@@ -156,7 +156,7 @@ LNode<DataType> *LinkList<DataType>::LocateElem(int value) const {
 /// \tparam DataType
 /// \param insertLoc
 /// \param newNode
-template<typename DataType>
+template<class DataType>
 void LinkList<DataType>::BeforeInsert(int insertLoc,LNode<DataType>& newNode) {
     LNode<DataType>* leftNode = this->GetElem(insertLoc-1);
     LNode<DataType>* rightNode = leftNode->next;
@@ -178,7 +178,7 @@ void LinkList<DataType>::BeforeInsert(int insertLoc,LNode<DataType>& newNode) {
 /// \tparam DataType
 /// \param insertLoc
 /// \param newNode
-template<typename DataType>
+template<class DataType>
 void LinkList<DataType>::AfterInsert(int insertLoc, LNode<DataType> &newNode) {
     LNode<DataType>* leftNode = this->GetElem(insertLoc);
     LNode<DataType>* rightNode = leftNode->next;
@@ -201,7 +201,7 @@ void LinkList<DataType>::AfterInsert(int insertLoc, LNode<DataType> &newNode) {
 //std::cout<<"end"<<std::endl;
 /// \tparam DataType
 /// \param elem
-template<typename DataType>
+template<class DataType>
 void LinkList<DataType>::DeleteElem(int elem) {
     if(elem>this->link_list_length)
         throw "Wrong elem";

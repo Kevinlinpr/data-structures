@@ -7,7 +7,7 @@
 
 #include <iostream>
 const int MAXSIZE = 100;
-template <typename DataType>
+template <class DataType>
 class LinearList {
 public:
     LinearList() = default;   //初始化线性表
@@ -25,7 +25,7 @@ public:
     int linear_list_length = 0;
 };
 
-template<typename DataType>
+template<class DataType>
 LinearList<DataType>::LinearList(DataType *data, int length) {
     if(length>MAXSIZE)
         throw "wrong parameter";
@@ -35,7 +35,7 @@ LinearList<DataType>::LinearList(DataType *data, int length) {
     linear_list_length = length;
 }
 
-template<typename DataType>
+template<class DataType>
 DataType LinearList<DataType>::GetElem(int elem) {
     if(elem<1||elem>linear_list_length)
         throw "wrong location";
@@ -43,7 +43,7 @@ DataType LinearList<DataType>::GetElem(int elem) {
         return list[elem-1];
 }
 
-template<typename DataType>
+template<class DataType>
 int LinearList<DataType>::LocateElem(DataType value) {
     for (int i = 0; i < linear_list_length; ++i) {
         if(value==list[i])
@@ -52,7 +52,7 @@ int LinearList<DataType>::LocateElem(DataType value) {
     return 0;
 }
 
-template<typename DataType>
+template<class DataType>
 void LinearList<DataType>::ListInsert(int elem, DataType value) {
     if(linear_list_length>=MAXSIZE)
         throw "Overflow";
@@ -65,7 +65,7 @@ void LinearList<DataType>::ListInsert(int elem, DataType value) {
     linear_list_length++;
 }
 
-template<typename DataType>
+template<class DataType>
 DataType LinearList<DataType>::ListDelete(int elem) {
     DataType delete_value;
     if(linear_list_length<=0)
@@ -80,14 +80,14 @@ DataType LinearList<DataType>::ListDelete(int elem) {
     return delete_value;
 }
 
-template<typename DataType>
+template<class DataType>
 void LinearList<DataType>::PrintList() {
     for (int i = 0; i < linear_list_length; ++i) {
         std::cout<<"INDEX: "<<i<<" VALUE: "<<list[i]<<std::endl;
     }
 }
 
-template<typename DataType>
+template<class DataType>
 void LinearList<DataType>::PrintList(LinearList<DataType> list) {
     for (int i = 0; i < list.linear_list_length; ++i) {
         std::cout<<"INDEX: "<<i<<" VALUE: "<<list.list[i]<<std::endl;

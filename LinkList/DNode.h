@@ -6,7 +6,7 @@
 #define STLLEARN_DNODE_H
 
 #include "LNode.h"
-template <typename DataType>
+template <class DataType>
 class DNode :public LNode<DataType> {
 public:
     DNode():LNode<DataType>(){};
