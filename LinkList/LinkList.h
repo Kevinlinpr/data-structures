@@ -12,11 +12,14 @@ template <typename DataType>
 class LinkList {
 public:
     LinkList();
-    LinkList<DataType> HeadInsertCreateList(PracticeLinearList<DataType> linearList);
-    LinkList<DataType> EndInsertCreateList(PracticeLinearList<DataType> linearList);
+    LinkList<DataType> HeadInsertCreateList(const PracticeLinearList<DataType>& linearList);
+    LinkList<DataType> EndInsertCreateList(const PracticeLinearList<DataType>& linearList);
     void PrintList() const;
+    LNode<DataType>* GetElem(int loc) const;
+    LNode<DataType>* LocateElem(int value) const;
 private:
     LNode<DataType>* head;
+    int link_list_length;
 };
 
 
@@ -25,6 +28,7 @@ LinkList<DataType>::LinkList() {
     head = new LNode<DataType>;
     head->data = 0;
     head->next = nullptr;
+    this->link_list_length = 0;
 }
 /// 头查法创建单链表
 //int a[9]={12,29,30,35,998,998,1200,1200,2900};
@@ -37,9 +41,10 @@ LinkList<DataType>::LinkList() {
 /// \param linearList
 /// \return
 template<typename DataType>
-LinkList<DataType> LinkList<DataType>::HeadInsertCreateList(PracticeLinearList<DataType> linearList) {
+LinkList<DataType> LinkList<DataType>::HeadInsertCreateList(const PracticeLinearList<DataType>& linearList) {
     LNode<DataType> *tmpNode = nullptr,*newNode = nullptr;
-    for (int i = 0; i < linearList.linear_list_length; ++i) {
+    this->link_list_length = linearList.linear_list_length;
+    for (int i = 0; i < this->link_list_length; ++i) {
         newNode = new LNode<DataType>;
         head->next = newNode;
         newNode->next = tmpNode;
@@ -61,10 +66,11 @@ LinkList<DataType> LinkList<DataType>::HeadInsertCreateList(PracticeLinearList<D
 /// \param linearList
 /// \return
 template<typename DataType>
-LinkList<DataType> LinkList<DataType>::EndInsertCreateList(PracticeLinearList<DataType> linearList) {
+LinkList<DataType> LinkList<DataType>::EndInsertCreateList(const PracticeLinearList<DataType>& linearList) {
     LNode<DataType> *tmpNode = nullptr,*newNode = nullptr;
+    this->link_list_length = linearList.linear_list_length;
     tmpNode = head;
-    for (int i = 0; i < linearList.linear_list_length; ++i) {
+    for (int i = 0; i < this->link_list_length; ++i) {
         newNode = new LNode<DataType>;
         newNode->data = linearList.list[i];
         newNode->next = nullptr;
@@ -77,19 +83,63 @@ LinkList<DataType> LinkList<DataType>::EndInsertCreateList(PracticeLinearList<Da
 
 template<typename DataType>
 void LinkList<DataType>::PrintList() const {
-    int amount = 0;
     LNode<DataType>* copeNode = this->head->next;
-    while(true){
-        ++amount;
-        std::cout<<"NO."<<amount<<"  data: "<<copeNode->data<<std::endl;
+    for (int i = 0; i < this->link_list_length; ++i) {
+        std::cout<<"NO."<<i+1<<"  data: "<<copeNode->data<<std::endl;
         copeNode = copeNode->next;
-        if(copeNode->next== nullptr){
-            ++amount;
-            std::cout<<"NO."<<amount<<"  data: "<<copeNode->data<<" THIS IS FINAL NODE"<<std::endl;
-            break;
-        }
     }
-    std::cout<<"Amount: "<<amount<<std::endl;
+    std::cout<<"Amount: "<<this->link_list_length<<std::endl;
+}
+
+/// 按位置查找单链表节点
+//int a[9]={12,29,30,35,998,998,1200,1200,2900};
+//PracticeLinearList<int> practiceLinearListA(a,9);
+//LinkList<int> linkList;
+//linkList.EndInsertCreateList(practiceLinearListA);
+//linkList.PrintList();
+//LNode<int>* node = linkList.GetElem(9);
+//std::cout<<"find node data: "<<node->data<<std::endl;
+//std::cout<<"end"<<std::endl;
+/// \tparam DataType
+/// \param loc
+/// \return
+template<typename DataType>
+LNode<DataType> *LinkList<DataType>::GetElem(int loc) const {
+    LNode<DataType>* copeNode = this->head;
+    if(loc>this->link_list_length||loc<0)
+        throw "Wrong elem";
+    if(loc==0)
+        return copeNode;
+    for (int i = 1; i < loc + 1; ++i) {
+        copeNode = copeNode->next;
+    }
+    return copeNode;
+}
+
+/// 按值查找单链表节点
+//int a[9]={12,29,30,35,998,998,1200,1200,2900};
+//PracticeLinearList<int> practiceLinearListA(a,9);
+//LinkList<int> linkList;
+//linkList.EndInsertCreateList(practiceLinearListA);
+//linkList.PrintList();
+//LNode<int>* node = linkList.LocateElem(13);
+//if(node)
+//std::cout<<"find it"<<std::endl;
+//else
+//std::cout<<"isn't there"<<std::endl;
+//std::cout<<"end"<<std::endl;
+/// \tparam DataType
+/// \param value
+/// \return
+template<typename DataType>
+LNode<DataType> *LinkList<DataType>::LocateElem(int value) const {
+    LNode<DataType>* copNode = this->head->next;
+    for (int i = 0; i < this->link_list_length; ++i) {
+        if(copNode->data==value)
+            return copNode;
+        copNode = copNode->next;
+    }
+    return nullptr;
 }
 
 #endif //STLLEARN_LINKLIST_H
