@@ -9,7 +9,7 @@ template <typename DataType>
 class LNode {
 public:
     LNode();
-    LNode(DataType value);
+    explicit LNode(DataType value);
     DataType data;
     LNode* next;
 };
