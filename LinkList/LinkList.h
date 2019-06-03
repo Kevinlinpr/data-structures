@@ -19,6 +19,7 @@ public:
     LNode<DataType>* LocateElem(int value) const;
     void BeforeInsert(int insertLoc,LNode<DataType>& newNode);
     void AfterInsert(int insertLoc,LNode<DataType>& newNode);
+    void DeleteElem(int elem);
 private:
     LNode<DataType>* head;
     int link_list_length{};
@@ -184,6 +185,31 @@ void LinkList<DataType>::AfterInsert(int insertLoc, LNode<DataType> &newNode) {
     leftNode->next = &newNode;
     newNode.next = rightNode;
     ++this->link_list_length;
+}
+
+/// 删除
+//int a[9]={12,29,30,35,998,998,1200,1200,2900};
+//PracticeLinearList<int> practiceLinearListA(a,9);
+//LinkList<int> linkList;
+//linkList.EndInsertCreateList(practiceLinearListA);
+//linkList.PrintList();
+//LNode<int> node(38);
+//linkList.AfterInsert(5,node);
+//linkList.PrintList();
+//linkList.DeleteElem(6);
+//linkList.PrintList();
+//std::cout<<"end"<<std::endl;
+/// \tparam DataType
+/// \param elem
+template<typename DataType>
+void LinkList<DataType>::DeleteElem(int elem) {
+    if(elem>this->link_list_length)
+        throw "Wrong elem";
+    LNode<DataType>* LeftNode = this->GetElem(elem-1);
+    LNode<DataType>* waite_to_delete_node = LeftNode->next;
+    LNode<DataType>* RightNode = waite_to_delete_node->next;
+    LeftNode->next = RightNode;
+    --this->link_list_length;
 }
 
 #endif //STLLEARN_LINKLIST_H

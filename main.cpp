@@ -11,5 +11,7 @@ int main(){
     LNode<int> node(38);
     linkList.AfterInsert(5,node);
     linkList.PrintList();
+    linkList.DeleteElem(6);
+    linkList.PrintList();
     std::cout<<"end"<<std::endl;
 }
