@@ -1,17 +1,12 @@
 #include <iostream>
-#include "LinkList/LinkList.h"
+#include "LinkList/DLinkList.h"
 #include "LinkList/DNode.h"
 
 int main(){
-    int a[9]={12,29,30,35,998,998,1200,1200,2900};
-    PracticeLinearList<int> practiceLinearListA(a,9);
-    LinkList<int> linkList;
-    linkList.EndInsertCreateList(practiceLinearListA);
-    linkList.PrintList();
-    LNode<int> node(38);
-    linkList.AfterInsert(5,node);
-    linkList.PrintList();
-    linkList.DeleteElem(6);
-    linkList.PrintList();
-    std::cout<<"end"<<std::endl;
+    int a[3]={12,29,30};
+    PracticeLinearList<int> practiceLinearListA(a,3);
+    auto * dLinkList = new DLinkList<int>;
+    dLinkList->HeadInsertCreateList(practiceLinearListA);
+    std::cout<<"hi"<<std::endl;
+    //dl.PrintList();
 }

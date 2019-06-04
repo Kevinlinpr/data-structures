@@ -5,14 +5,29 @@
 #ifndef STLLEARN_DNODE_H
 #define STLLEARN_DNODE_H
 
-#include "LNode.h"
 template <class DataType>
-class DNode :public LNode<DataType> {
+class DNode {
 public:
-    DNode():LNode<DataType>(){};
-    explicit DNode(DataType value):LNode<DataType>(value){};
-    LNode<DataType>* prior;
+    DNode();
+    explicit DNode(DataType value);
+    DataType data;
+    DNode* next;
+    DNode* prior;
 };
+
+template<class DataType>
+DNode<DataType>::DNode(DataType value) {
+    this->data = value;
+    this->next = nullptr;
+    this->prior = nullptr;
+}
+
+template<class DataType>
+DNode<DataType>::DNode() {
+    this->data = 0;
+    this->next = nullptr;
+    this->prior = nullptr;
+}
 
 
 #endif //STLLEARN_DNODE_H
