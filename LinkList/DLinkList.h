@@ -76,5 +76,169 @@ void DLinkList<DataType>::PrintList() const {
     std::cout<<"AMOUNT: "<<this->dlink_list_length<<std::endl;
 }
 
+/// 尾插法创建双向链表
+//int a[3]={12,29,30};
+//PracticeLinearList<int> practiceLinearListA(a,3);
+//std::cout<<"In heap"<<std::endl;
+//auto * dLinkListInHeap = new DLinkList<int>;
+//dLinkListInHeap->EndInsertCreateList(practiceLinearListA);
+//dLinkListInHeap->PrintList();
+/// \tparam DataType
+/// \param linearList
+/// \return
+template<class DataType>
+DLinkList<DataType> DLinkList<DataType>::EndInsertCreateList(const PracticeLinearList<DataType> &linearList) {
+    this->dlink_list_length = linearList.linear_list_length;
+    auto * firstNode = new DNode<DataType>;
+    DNode<DataType>* tmpNode = nullptr;
+    this->head = firstNode;
+    firstNode->next = nullptr;
+    firstNode->data = linearList.list[0];
+    firstNode->prior = nullptr;
+    tmpNode = firstNode;
+    for (int i = 1; i < this->dlink_list_length; ++i) {
+        auto newNode = new DNode<DataType>;
+        tmpNode->next = newNode;
+        newNode->data = linearList.list[i];
+        newNode->next = nullptr;
+        newNode->prior = tmpNode;
+        tmpNode = newNode;
+    }
+    return *this;
+}
+
+/// 按位置查找
+//int a[3]={12,29,30};
+//PracticeLinearList<int> practiceLinearListA(a,3);
+//std::cout<<"In heap"<<std::endl;
+//auto * dLinkListInHeap = new DLinkList<int>;
+//dLinkListInHeap->EndInsertCreateList(practiceLinearListA);
+//dLinkListInHeap->PrintList();
+//std::cout<<"GETELEM VALUE: "<<dLinkListInHeap->GetElem(3)->data<<std::endl;
+/// \tparam DataType
+/// \param loc
+/// \return
+template<class DataType>
+DNode<DataType> *DLinkList<DataType>::GetElem(int loc) const {
+    if(loc<=0&&loc>this->dlink_list_length)
+        throw "Wrong loc";
+    DNode<DataType>* copeNode = this->head;
+    for (int i = 0; i < loc - 1; ++i) {
+        copeNode = copeNode->next;
+    }
+    return copeNode;
+}
+
+/// 按值查询
+//int a[3]={12,29,30};
+//PracticeLinearList<int> practiceLinearListA(a,3);
+//std::cout<<"In heap"<<std::endl;
+//auto * dLinkListInHeap = new DLinkList<int>;
+//dLinkListInHeap->EndInsertCreateList(practiceLinearListA);
+//dLinkListInHeap->PrintList();
+//std::cout<<"LOCATEELEM VALUE: "<<dLinkListInHeap->LocateElem(29)->data<<std::endl;
+/// \tparam DataType
+/// \param value
+/// \return
+template<class DataType>
+DNode<DataType> *DLinkList<DataType>::LocateElem(int value) const {
+    DNode<DataType>* copeNode = this->head;
+    for (int i = 0; i < this->dlink_list_length; ++i) {
+        if(copeNode->data==value)
+            return copeNode;
+        copeNode = copeNode->next;
+    }
+    return nullptr;
+}
+
+/// 前插入
+//int a[3]={12,29,30};
+//PracticeLinearList<int> practiceLinearListA(a,3);
+//std::cout<<"In heap"<<std::endl;
+//auto * dLinkListInHeap = new DLinkList<int>;
+//dLinkListInHeap->EndInsertCreateList(practiceLinearListA);
+//dLinkListInHeap->PrintList();
+//DNode<int> newNode(99);
+//dLinkListInHeap->BeforeInsert(3,newNode);
+//dLinkListInHeap->PrintList();
+/// \tparam DataType
+/// \param insertLoc
+/// \param newNode
+template<class DataType>
+void DLinkList<DataType>::BeforeInsert(int insertLoc, DNode<DataType> &newNode) {
+    DNode<DataType>* copeNode = this->GetElem(insertLoc);
+    if(insertLoc==1){
+        this->head = &newNode;
+        newNode.prior = nullptr;
+    }else{
+        copeNode->prior->next = &newNode;
+        newNode.prior = copeNode->prior;
+    }
+    newNode.next = copeNode;
+    copeNode->prior = &newNode;
+    ++this->dlink_list_length;
+}
+
+/// 后插入
+//int a[3]={12,29,30};
+//PracticeLinearList<int> practiceLinearListA(a,3);
+//std::cout<<"In heap"<<std::endl;
+//auto * dLinkListInHeap = new DLinkList<int>;
+//dLinkListInHeap->EndInsertCreateList(practiceLinearListA);
+//dLinkListInHeap->PrintList();
+//DNode<int> newNode(99);
+//dLinkListInHeap->BeforeInsert(1,newNode);
+//dLinkListInHeap->PrintList();
+/// \tparam DataType
+/// \param insertLoc
+/// \param newNode
+template<class DataType>
+void DLinkList<DataType>::AfterInsert(int insertLoc, DNode<DataType> &newNode) {
+    DNode<DataType>* copeNode = this->GetElem(insertLoc);
+    if(insertLoc==this->dlink_list_length){
+        newNode.next = nullptr;
+    }else{
+        copeNode->next->prior = &newNode;
+        newNode.next = copeNode->next;
+    }
+    copeNode->next = &newNode;
+    newNode.prior = copeNode;
+    ++this->dlink_list_length;
+}
+
+/// 删除元素
+//int a[3]={12,29,30};
+//PracticeLinearList<int> practiceLinearListA(a,3);
+//std::cout<<"In heap"<<std::endl;
+//auto * dLinkListInHeap = new DLinkList<int>;
+//dLinkListInHeap->EndInsertCreateList(practiceLinearListA);
+//dLinkListInHeap->PrintList();
+//DNode<int> newNode(99);
+//dLinkListInHeap->BeforeInsert(1,newNode);
+//dLinkListInHeap->PrintList();
+//dLinkListInHeap->DeleteElem(2);
+//dLinkListInHeap->PrintList();
+/// \tparam DataType
+/// \param elem
+template<class DataType>
+void DLinkList<DataType>::DeleteElem(int elem) {
+    DNode<DataType>* copeNode = this->GetElem(elem);
+    if(elem==1){
+        this->head = copeNode->next;
+        copeNode->next->prior = nullptr;
+    }
+    else if(elem==this->dlink_list_length){
+        copeNode->prior->next = nullptr;
+        copeNode->prior = nullptr;
+    }
+    else{
+        copeNode->prior->next = copeNode->next;
+        copeNode->next->prior = copeNode->prior;
+        copeNode->prior = nullptr;
+        copeNode->next = nullptr;
+    }
+    --this->dlink_list_length;
+}
+
 
 #endif //STLLEARN_DLINKLIST_H
