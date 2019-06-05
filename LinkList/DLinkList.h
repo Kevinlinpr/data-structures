@@ -56,6 +56,7 @@ DLinkList<DataType> DLinkList<DataType>::HeadInsertCreateList(const PracticeLine
         newNode->data = linearList.list[i];
         tmpNode = newNode;
     }
+    std::cout<<"Finish HeadInsert Creation"<<std::endl;
     return *this;
 }
 
@@ -82,21 +83,17 @@ void DLinkList<DataType>::PrintList() const {
 template<class DataType>
 DLinkList<DataType> DLinkList<DataType>::EndInsertCreateList(const PracticeLinearList<DataType> &linearList) {
     this->dlink_list_length = linearList.linear_list_length;
-    auto * firstNode = new DNode<DataType>;
-    DNode<DataType>* tmpNode = nullptr;
-    this->head = firstNode;
-    firstNode->next = nullptr;
-    firstNode->data = linearList.list[0];
-    firstNode->prior = nullptr;
-    tmpNode = firstNode;
-    for (int i = 1; i < this->dlink_list_length; ++i) {
-        auto newNode = new DNode<DataType>;
-        tmpNode->next = newNode;
+    DNode<DataType> * tmpNode = nullptr,*newNode;
+    tmpNode = this->head;
+    for (int i = 0; i < this->dlink_list_length; ++i) {
+        newNode = new DNode(0);
         newNode->data = linearList.list[i];
         newNode->next = nullptr;
+        tmpNode->next = newNode;
         newNode->prior = tmpNode;
         tmpNode = newNode;
     }
+    std::cout<<"Finish EndInsert Creation"<<std::endl;
     return *this;
 }
 

@@ -7,6 +7,6 @@ int main(){
     PracticeLinearList<int> practiceLinearListA(a,3);
     std::cout<<"In heap"<<std::endl;
     auto * dLinkListInHeap = new DLinkList<int>;
-    dLinkListInHeap->HeadInsertCreateList(practiceLinearListA);
+    dLinkListInHeap->EndInsertCreateList(practiceLinearListA);
     dLinkListInHeap->PrintList();
 }

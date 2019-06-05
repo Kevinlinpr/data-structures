@@ -11,12 +11,14 @@ template <class DataType>
 class LLinkList : public LinkList<DataType>{
 public:
     LLinkList():LinkList<DataType>(){};
+    LinkList<DataType> HeadInsertCreateList(const PracticeLinearList<DataType>& linearList) override;
 private:
     LNode<DataType>* tail;
 };
 
+
 template<class DataType>
-LinkList<DataType> LLinkList<DataType>::HeadInsertCreateList(const PracticeLinearList<DataType> &linearList) {
+LinkList<DataType> LLinkList<DataType>::HeadInsertCreateList(const PracticeLinearList<DataType> &linearList){
     LinkList<DataType>::HeadInsertCreateList(linearList);
     tail = LinkList<DataType>::GetElem(this->link_list_length);
     tail->next = this->head;

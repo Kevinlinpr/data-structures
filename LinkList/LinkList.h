@@ -12,7 +12,7 @@ template <class DataType>
 class LinkList {
 public:
     LinkList();
-    LinkList<DataType> HeadInsertCreateList(const PracticeLinearList<DataType>& linearList);
+    virtual LinkList<DataType> HeadInsertCreateList(const PracticeLinearList<DataType>& linearList);
     LinkList<DataType> EndInsertCreateList(const PracticeLinearList<DataType>& linearList);
     void PrintList() const;
     LNode<DataType>* GetElem(int loc) const;
