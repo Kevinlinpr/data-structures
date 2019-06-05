@@ -112,7 +112,7 @@ template<class DataType>
 DNode<DataType> *DLinkList<DataType>::GetElem(int loc) const {
     if(loc<=0&&loc>this->dlink_list_length)
         throw "Wrong loc";
-    DNode<DataType>* copeNode = this->head;
+    DNode<DataType>* copeNode = this->head->next;
     for (int i = 0; i < loc - 1; ++i) {
         copeNode = copeNode->next;
     }
@@ -132,7 +132,7 @@ DNode<DataType> *DLinkList<DataType>::GetElem(int loc) const {
 /// \return
 template<class DataType>
 DNode<DataType> *DLinkList<DataType>::LocateElem(int value) const {
-    DNode<DataType>* copeNode = this->head;
+    DNode<DataType>* copeNode = this->head->next;
     for (int i = 0; i < this->dlink_list_length; ++i) {
         if(copeNode->data==value)
             return copeNode;
@@ -158,7 +158,7 @@ template<class DataType>
 void DLinkList<DataType>::BeforeInsert(int insertLoc, DNode<DataType> &newNode) {
     DNode<DataType>* copeNode = this->GetElem(insertLoc);
     if(insertLoc==1){
-        this->head = &newNode;
+        this->head->next = &newNode;
         newNode.prior = nullptr;
     }else{
         copeNode->prior->next = &newNode;
@@ -177,7 +177,7 @@ void DLinkList<DataType>::BeforeInsert(int insertLoc, DNode<DataType> &newNode) 
 //dLinkListInHeap->EndInsertCreateList(practiceLinearListA);
 //dLinkListInHeap->PrintList();
 //DNode<int> newNode(99);
-//dLinkListInHeap->BeforeInsert(1,newNode);
+//dLinkListInHeap->AfterInsert(1,newNode);
 //dLinkListInHeap->PrintList();
 /// \tparam DataType
 /// \param insertLoc
@@ -214,8 +214,8 @@ template<class DataType>
 void DLinkList<DataType>::DeleteElem(int elem) {
     DNode<DataType>* copeNode = this->GetElem(elem);
     if(elem==1){
-        this->head = copeNode->next;
-        copeNode->next->prior = nullptr;
+        this->head->next = copeNode->next;
+        copeNode->next->prior = this->head;
     }
     else if(elem==this->dlink_list_length){
         copeNode->prior->next = nullptr;

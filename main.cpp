@@ -9,4 +9,9 @@ int main(){
     auto * dLinkListInHeap = new DLinkList<int>;
     dLinkListInHeap->EndInsertCreateList(practiceLinearListA);
     dLinkListInHeap->PrintList();
+    DNode<int> newNode(99);
+    dLinkListInHeap->BeforeInsert(1,newNode);
+    dLinkListInHeap->PrintList();
+    dLinkListInHeap->DeleteElem(2);
+    dLinkListInHeap->PrintList();
 }
