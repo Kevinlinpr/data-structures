@@ -12,7 +12,6 @@ template <class DataType>
 class DLinkList {
 public:
     DLinkList();
-    ~DLinkList();
     DLinkList<DataType> HeadInsertCreateList(const PracticeLinearList<DataType>& linearList);
     DLinkList<DataType> EndInsertCreateList(const PracticeLinearList<DataType>& linearList);
     void PrintList() const;
@@ -33,26 +32,37 @@ DLinkList<DataType>::DLinkList() {
     this->dlink_list_length = 0;
 }
 
-template<class DataType>
-DLinkList<DataType>::~DLinkList() {
-    delete this->head;
-    this->head = nullptr;
-}
-
+/// 头插法创建双链表（请不要随便使用析构函数，在动态内存分配时）
+//int a[3]={12,29,30};
+//PracticeLinearList<int> practiceLinearListA(a,3);
+//std::cout<<"In heap"<<std::endl;
+//auto * dLinkListInHeap = new DLinkList<int>;
+//dLinkListInHeap->HeadInsertCreateList(practiceLinearListA);
+//dLinkListInHeap->PrintList();
+/// \tparam DataType
+/// \param linearList
+/// \return
 template<class DataType>
 DLinkList<DataType> DLinkList<DataType>::HeadInsertCreateList(const PracticeLinearList<DataType> &linearList) {
-    DNode<DataType>* tmpNode = new DNode(0), *newNode = new DNode(0);
     this->dlink_list_length = linearList.linear_list_length;
-    for (int i = 0; i < 2; ++i) {
-        newNode = new DNode(0);
-        head->next = newNode;
-        newNode->next = tmpNode;
+
+    auto * firstNode = new DNode<DataType>;
+    DNode<DataType> * tmpNode = nullptr;
+
+    this->head = firstNode;
+    firstNode->data = linearList.list[0];
+    firstNode->prior = nullptr;
+    firstNode->next = nullptr;
+    tmpNode = firstNode;
+
+    for (int i = 1; i < this->dlink_list_length; ++i) {
+        auto * newNode = new DNode<DataType>;
+        this->head = newNode;
         newNode->data = linearList.list[i];
+        newNode->next = tmpNode;
         tmpNode->prior = newNode;
         tmpNode = newNode;
     }
-    std::cout<<this->dlink_list_length<<std::endl;
-
     return *this;
 }
 
@@ -60,7 +70,7 @@ template<class DataType>
 void DLinkList<DataType>::PrintList() const {
     DNode<DataType>* copeNode = this->head;
     for (int i = 0; i < this->dlink_list_length; ++i) {
-        std::cout<<"INDEX: "<<i<<" VALUE: "<<copeNode->data<<std::endl;
+        std::cout<<"NO."<<i+1<<" VALUE: "<<copeNode->data<<std::endl;
         copeNode = copeNode->next;
     }
     std::cout<<"AMOUNT: "<<this->dlink_list_length<<std::endl;
