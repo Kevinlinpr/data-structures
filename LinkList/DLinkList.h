@@ -21,14 +21,14 @@ public:
     void AfterInsert(int insertLoc,DNode<DataType>& newNode);
     void DeleteElem(int elem);
 
-private:
+protected:
     DNode<DataType>* head;
     int dlink_list_length{};
 };
 
 template<class DataType>
 DLinkList<DataType>::DLinkList() {
-    this->head = nullptr;
+    this->head = new DNode(0);
     this->dlink_list_length = 0;
 }
 
@@ -45,22 +45,15 @@ DLinkList<DataType>::DLinkList() {
 template<class DataType>
 DLinkList<DataType> DLinkList<DataType>::HeadInsertCreateList(const PracticeLinearList<DataType> &linearList) {
     this->dlink_list_length = linearList.linear_list_length;
-
-    auto * firstNode = new DNode<DataType>;
-    DNode<DataType> * tmpNode = nullptr;
-
-    this->head = firstNode;
-    firstNode->data = linearList.list[0];
-    firstNode->prior = nullptr;
-    firstNode->next = nullptr;
-    tmpNode = firstNode;
-
-    for (int i = 1; i < this->dlink_list_length; ++i) {
-        auto * newNode = new DNode<DataType>;
-        this->head = newNode;
-        newNode->data = linearList.list[i];
+    DNode<DataType> * tmpNode = nullptr,*newNode;
+    for (int i = 0; i < this->dlink_list_length; ++i) {
+        newNode = new DNode(0);
+        this->head->next = newNode;
+        newNode->prior = this->head;
         newNode->next = tmpNode;
-        tmpNode->prior = newNode;
+        if(newNode->next!= nullptr)
+            newNode->next->prior = newNode;
+        newNode->data = linearList.list[i];
         tmpNode = newNode;
     }
     return *this;
@@ -68,7 +61,7 @@ DLinkList<DataType> DLinkList<DataType>::HeadInsertCreateList(const PracticeLine
 
 template<class DataType>
 void DLinkList<DataType>::PrintList() const {
-    DNode<DataType>* copeNode = this->head;
+    DNode<DataType>* copeNode = this->head->next;
     for (int i = 0; i < this->dlink_list_length; ++i) {
         std::cout<<"NO."<<i+1<<" VALUE: "<<copeNode->data<<std::endl;
         copeNode = copeNode->next;
@@ -239,6 +232,8 @@ void DLinkList<DataType>::DeleteElem(int elem) {
     }
     --this->dlink_list_length;
 }
+
+
 
 
 #endif //STLLEARN_DLINKLIST_H

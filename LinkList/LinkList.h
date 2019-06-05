@@ -20,7 +20,8 @@ public:
     void BeforeInsert(int insertLoc,LNode<DataType>& newNode);
     void AfterInsert(int insertLoc,LNode<DataType>& newNode);
     void DeleteElem(int elem);
-private:
+
+protected:
     LNode<DataType>* head;
     int link_list_length{};
 };
