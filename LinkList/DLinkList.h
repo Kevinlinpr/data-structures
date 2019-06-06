@@ -12,8 +12,10 @@ template <class DataType>
 class DLinkList {
 public:
     DLinkList();
-    DLinkList<DataType> HeadInsertCreateList(const PracticeLinearList<DataType>& linearList);
-    DLinkList<DataType> EndInsertCreateList(const PracticeLinearList<DataType>& linearList);
+
+    virtual DLinkList<DataType> HeadInsertCreateList(const PracticeLinearList<DataType>& linearList);
+
+    virtual DLinkList<DataType> EndInsertCreateList(const PracticeLinearList<DataType>& linearList);
     void PrintList() const;
     DNode<DataType>* GetElem(int loc) const;
     DNode<DataType>* LocateElem(int value) const;

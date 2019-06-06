@@ -13,7 +13,8 @@ class LinkList {
 public:
     LinkList();
     virtual LinkList<DataType> HeadInsertCreateList(const PracticeLinearList<DataType>& linearList);
-    LinkList<DataType> EndInsertCreateList(const PracticeLinearList<DataType>& linearList);
+
+    virtual LinkList<DataType> EndInsertCreateList(const PracticeLinearList<DataType>& linearList);
     void PrintList() const;
     LNode<DataType>* GetElem(int loc) const;
     LNode<DataType>* LocateElem(int value) const;
