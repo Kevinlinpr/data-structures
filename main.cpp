@@ -1,31 +1,18 @@
 #include <iostream>
-#include "Stack/ShareStack.h"
+#include "Stack/LinkStack.h"
 
 int main(){
-    ShareStack<int,10> shareStack;
-    shareStack.PushLStack(1);
-    shareStack.PushRStack(2);
-    shareStack.PushLStack(3);
-    shareStack.PushLStack(4);
-    shareStack.PushLStack(5);
-    shareStack.PushLStack(6);
-    shareStack.PushRStack(7);
-    shareStack.PushRStack(8);
-    shareStack.PushRStack(9);
-    shareStack.PushRStack(10);
-    shareStack.PrintL();
-    shareStack.PrintR();
-    shareStack.PopLStack();
-    shareStack.PopLStack();
-    shareStack.PopLStack();
-    shareStack.PrintL();
-    shareStack.PrintR();
-    shareStack.PopRStack();
-    shareStack.PopRStack();
-    shareStack.PopRStack();
-    shareStack.PopRStack();
-    shareStack.PopRStack();
-    shareStack.PopRStack();
-    shareStack.PrintL();
-    shareStack.PrintR();
+    LinkStack<int> linkStack;
+    linkStack.Push(1);
+    linkStack.Push(2);
+    linkStack.Push(3);
+    linkStack.Push(4);
+    linkStack.Pop();
+    linkStack.Pop();
+    int topValue;
+    linkStack.GetTop(topValue);
+    std::cout<<"TOP VALUE: "<<topValue<<std::endl;
+    linkStack.Print();
+    linkStack.ClearStack();
+    linkStack.Print();
 }
