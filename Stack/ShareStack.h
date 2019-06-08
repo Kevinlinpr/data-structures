@@ -20,8 +20,8 @@ public:
     bool PushRStack(DataType value);
     bool PopLStack();
     bool PopRStack();
-    inline bool GetLTop(){ return this->data[this->lTop];}
-    inline bool GetRTop(){ return this->data[this->rTop];}
+    bool GetLTop(DataType& topValue);
+    bool GetRTop(DataType& topValue);
     inline void ClearStack(){ this->lTop = -1;  this->rTop = MAXSIZE;}
     void PrintL();
     void PrintR();
@@ -103,6 +103,27 @@ void ShareStack<DataType, MAXSIZE>::PrintR() {
     }
     std::cout<<"PRINT FINISHED!"<<std::endl;
 }
+
+template<class DataType, int MAXSIZE>
+bool ShareStack<DataType, MAXSIZE>::GetLTop(DataType &topValue) {
+    if(this->StackLEmpty()){
+        std::cout<<"THIS LEFT STACK IS EMPTY, NO TOP VALUE."<<std::endl;
+        return false;
+    }
+    topValue = this->data[this->lTop];
+    return true;
+}
+
+template<class DataType, int MAXSIZE>
+bool ShareStack<DataType, MAXSIZE>::GetRTop(DataType &topValue) {
+    if(this->StackREmpty()){
+        std::cout<<"THIS RIGHT STACK IS EMPTY, NO TOP VALUE."<<std::endl;
+        return false;
+    }
+    topValue = this->data[this->rTop];
+    return true;
+}
+
 
 /// example
 //ShareStack<int,10> shareStack;
