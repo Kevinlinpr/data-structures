@@ -47,6 +47,7 @@ bool LQueue<DataType, MAXSIZE>::EnLQueue(DataType value) {
     }
     this->data[this->rear] = value;
     this->rear = (this->rear+1)%MAXSIZE;
+    std::cout<<"INSERTED VALUE: "<<value<<std::endl;
     return true;
 }
 
@@ -77,9 +78,38 @@ void LQueue<DataType, MAXSIZE>::Print() {
         std::cout<<"THIS LQUEUE IS EMPTY. PRINT FAILED."<<std::endl;
         return;
     }
-    for (int i = this->front; i <this->rear; ++i) {
+    int printedAmount = 0;
+    int amount = (this->rear + MAXSIZE - this->front)%MAXSIZE;
+    for (int i = this->front; i <this->front+amount && printedAmount < amount; i = (i+1)%MAXSIZE) {
         std::cout<<"PRINT: INDEX: "<<i<<" VALUE: "<<this->data[i]<<std::endl;
+        ++printedAmount;
     }
+    std::cout<<"front: "<<this->front<<" rear: "<<this->rear<<std::endl;
 }
+
+/// example
+//LQueue<int,10> lQueue;
+//for (int j = 0; j < 10; ++j) {
+//lQueue.EnLQueue(j+1);
+//}
+//
+//lQueue.Print();
+//for (int j = 0; j < 2; ++j) {
+//int deValue;
+//lQueue.DeLQueue(deValue);
+//std::cout<<"DELETE VALUE: "<<deValue<<std::endl;
+//}
+//lQueue.EnLQueue(10);
+//lQueue.EnLQueue(11);
+//lQueue.Print();
+//for (int j = 0; j < 5; ++j) {
+//int deValue;
+//lQueue.DeLQueue(deValue);
+//std::cout<<"DELETE VALUE: "<<deValue<<std::endl;
+//}
+//for (int j = 0; j < 7; ++j) {
+//lQueue.EnLQueue(j+12);
+//}
+//lQueue.Print();
 
 #endif //STLLEARN_LQUEUE_H

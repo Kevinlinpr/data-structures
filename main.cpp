@@ -1,19 +1,29 @@
 #include <iostream>
-#include "Queue/SqQueue.h"
+#include "Queue/LQueue.h"
 
 int main(){
-    SqQueue<int,10> sqQueue;
-    for (int j = 0; j < 7; ++j) {
-        sqQueue.EnQueue(j+1);
+    LQueue<int,10> lQueue;
+    for (int j = 0; j < 10; ++j) {
+        lQueue.EnLQueue(j+1);
     }
-    sqQueue.Print();
-    for (int i = 0; i < 3; ++i) {
+
+    lQueue.Print();
+    for (int j = 0; j < 2; ++j) {
         int deValue;
-        sqQueue.DeQueue(deValue);
+        lQueue.DeLQueue(deValue);
         std::cout<<"DELETE VALUE: "<<deValue<<std::endl;
     }
-    sqQueue.Print();
-    int headValue;
-    sqQueue.GetHead(headValue);
-    std::cout<<"HEAD VALUE: "<<headValue<<std::endl;
+    lQueue.EnLQueue(10);
+    lQueue.EnLQueue(11);
+    lQueue.Print();
+    for (int j = 0; j < 5; ++j) {
+        int deValue;
+        lQueue.DeLQueue(deValue);
+        std::cout<<"DELETE VALUE: "<<deValue<<std::endl;
+    }
+    for (int j = 0; j < 7; ++j) {
+        lQueue.EnLQueue(j+12);
+    }
+    lQueue.Print();
+
 }
