@@ -1,6 +1,8 @@
-#include "Algorithm/PutQueen/ChessBoard.h"
+#include "BST/BST.h"
 
 int main(){
-    auto * chessBoard = new ChessBoard(8);
-    chessBoard->FindSolution();
+    int data[5] = {11,1,24,2,32};
+    PracticeLinearList<int> practiceLinearList(data,5);
+    BST<int> bst;
+    bst.InitBST(practiceLinearList);
 }
