@@ -37,7 +37,11 @@ BST<T>::BST() {
     this->root_node = nullptr;
 }
 
-
+/// 二叉搜索树构造
+//int data[5] = {11,1,24,2,32};
+//PracticeLinearList<int> practiceLinearList(data,5);
+//BST<int> bst;
+//bst.InitBST(practiceLinearList);
 template<class T>
 BST<T> *BST<T>::InitBST(PracticeLinearList<T> linearList) {
     this->root_node = new BSTNode<T>(linearList.list[0]);
