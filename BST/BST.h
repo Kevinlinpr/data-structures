@@ -6,8 +6,9 @@
 #define STLLEARN_BST_H
 
 #include "../LinearList/PracticeLinearList.h"
-#include "../Queue/LinkQueue.h"
 #include <queue>
+#include <stack>
+
 template <class T>
 class BSTNode{
 public:
@@ -15,6 +16,7 @@ public:
     T data;
     BSTNode<T>* left_child_node;
     BSTNode<T>* right_child_node;
+    bool operator!=(BSTNode<T>* bstNode);
 };
 
 template<class T>
@@ -22,6 +24,11 @@ BSTNode<T>::BSTNode(T value) {
     this->data = value;
     this->left_child_node = nullptr;
     this->right_child_node = nullptr;
+}
+
+template<class T>
+bool BSTNode<T>::operator!=(BSTNode<T> *bstNode) {
+    return this->data != bstNode->data;
 }
 
 template <class T>
@@ -32,6 +39,9 @@ public:
     BSTNode<T>* SearchBST(const T& value);
     static void PrintNodeInfo(BSTNode<T>* node);
     void DepthFirstPrint() const;
+    void PreOrderPrint() const;
+    void InOrderPrint() const;
+    void PostOrderPrint() const;
 private:
     BSTNode<T>* root_node;
 };
@@ -154,6 +164,48 @@ void BST<T>::DepthFirstPrint() const {
     }
     std::cout<<std::endl;
     std::cout<<"=== END DEPTH FIRST PRINT ==="<<std::endl;
+}
+
+/// 前序遍历
+//int data[16] = {11,1,24,2,32,90,58,34,22,13,99,47,12,13,5,8};
+//PracticeLinearList<int> practiceLinearList(data,16);
+//BST<int> bst;
+//bst.InitBST(practiceLinearList);
+//bst.PreOrderPrint();
+/// \tparam T
+template<class T>
+void BST<T>::PreOrderPrint() const {
+    std::stack<BSTNode<T>*> adjustStack;
+    if(this->root_node->right_child_node)
+        adjustStack.push(this->root_node->right_child_node);
+    if(this->root_node->left_child_node)
+        adjustStack.push(this->root_node->left_child_node);
+    if(adjustStack.size()<=0){
+        std::cout<<"PLEASE CHECK IF THIS IS A BST"<<std::endl;
+        return;
+    }
+    std::cout<<this->root_node->data<<" ";
+    while(!adjustStack.empty()){
+        BSTNode<T>* outletNode = adjustStack.top();
+        std::cout<<outletNode->data<<" ";
+        adjustStack.pop();
+        if(outletNode->right_child_node)
+            adjustStack.push(outletNode->right_child_node);
+        if(outletNode->left_child_node)
+            adjustStack.push(outletNode->left_child_node);
+    }
+    std::cout<<std::endl;
+    std::cout<<"PRINT FINISHED."<<std::endl;
+}
+
+template<class T>
+void BST<T>::InOrderPrint() const {
+
+}
+
+template<class T>
+void BST<T>::PostOrderPrint() const {
+
 }
 
 
