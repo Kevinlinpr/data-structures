@@ -130,7 +130,7 @@ void BST<T>::PrintNodeInfo(BSTNode<T> *node) {
     std::cout<<"=== END PRINT BST NODE ==="<<std::endl;
 }
 
-/// 深度优先遍历，从上到下，从左到右
+/// 广度优先遍历，从上到下，从左到右
 //int data[16] = {11,1,24,2,32,90,58,34,22,13,99,47,12,13,5,8};
 //PracticeLinearList<int> practiceLinearList(data,16);
 //BST<int> bst;
