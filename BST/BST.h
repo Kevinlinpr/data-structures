@@ -6,7 +6,8 @@
 #define STLLEARN_BST_H
 
 #include "../LinearList/PracticeLinearList.h"
-
+#include "../Queue/LinkQueue.h"
+#include <queue>
 template <class T>
 class BSTNode{
 public:
@@ -28,6 +29,9 @@ class BST {
 public:
     BST();
     BST<T>* InitBST(PracticeLinearList<T> linearList);
+    BSTNode<T>* SearchBST(const T& value);
+    static void PrintNodeInfo(BSTNode<T>* node);
+    void DepthFirstPrint() const;
 private:
     BSTNode<T>* root_node;
 };
@@ -72,6 +76,85 @@ BST<T> *BST<T>::InitBST(PracticeLinearList<T> linearList) {
     return this;
 }
 
+/// 二叉搜索树查询
+//int data[16] = {11,1,24,2,32,90,58,34,22,13,99,47,12,13,5,8};
+//PracticeLinearList<int> practiceLinearList(data,16);
+//BST<int> bst;
+//bst.InitBST(practiceLinearList);
+//auto result = bst.SearchBST(12);
+/// \tparam T
+/// \param value
+/// \return
+template<class T>
+BSTNode<T> *BST<T>::SearchBST(const T &value) {
+    BSTNode<T>* copeNode = this->root_node;
+    while(copeNode){
+        if(value<copeNode->data){
+            copeNode = copeNode->left_child_node;
+        } else{
+            if(value == copeNode->data){
+                std::cout<<"FIND VALUE IN THIS BST."<<std::endl;
+                return copeNode;
+            } else{
+                copeNode = copeNode->right_child_node;
+            }
+        }
+    }
+    std::cout<<"NO VALUE IN THIS BST."<<std::endl;
+    return nullptr;
+}
+
+/// 打印树节点
+//int data[16] = {11,1,24,2,32,90,58,34,22,13,99,47,12,13,5,8};
+//PracticeLinearList<int> practiceLinearList(data,16);
+//BST<int> bst;
+//bst.InitBST(practiceLinearList);
+//auto result = bst.SearchBST(12);
+//if(result){
+//BST<typeof(result->data)>::PrintNodeInfo(result);
+//}
+/// \tparam T
+/// \param node
+template<class T>
+void BST<T>::PrintNodeInfo(BSTNode<T> *node) {
+    std::cout<<"=== START PRINT BST NODE ==="<<std::endl;
+    std::cout<<"THIS NODE VALUE: "<<node->data<<std::endl;
+    if(node->left_child_node)
+        std::cout<<"LEFT CHILD VALUE: "<<node->left_child_node->data<<std::endl;
+    else
+        std::cout<<"LEFT CHILD VALUE: "<<"NULL"<<std::endl;
+    if(node->left_child_node)
+        std::cout<<"RIGHT CHILD VALUE: "<<node->right_child_node->data<<std::endl;
+    else
+        std::cout<<"RIGHT CHILD VALUE: "<<"NULL"<<std::endl;
+    std::cout<<"=== END PRINT BST NODE ==="<<std::endl;
+}
+
+/// 深度优先遍历，从上到下，从左到右
+//int data[16] = {11,1,24,2,32,90,58,34,22,13,99,47,12,13,5,8};
+//PracticeLinearList<int> practiceLinearList(data,16);
+//BST<int> bst;
+//bst.InitBST(practiceLinearList);
+//bst.DepthFirstPrint();
+/// \tparam T
+template<class T>
+void BST<T>::DepthFirstPrint() const {
+    std::cout<<"=== START DEPTH FIRST PRINT ==="<<std::endl;
+    std::queue<BSTNode<T>*> waiteQueue;
+    waiteQueue.push(this->root_node);
+    while(!waiteQueue.empty()){
+        BSTNode<T>* copeNode = nullptr;
+        copeNode = waiteQueue.front();
+        waiteQueue.pop();
+        if(copeNode->left_child_node)
+            waiteQueue.push(copeNode->left_child_node);
+        if(copeNode->right_child_node)
+            waiteQueue.push(copeNode->right_child_node);
+        std::cout<<copeNode->data<<" ";
+    }
+    std::cout<<std::endl;
+    std::cout<<"=== END DEPTH FIRST PRINT ==="<<std::endl;
+}
 
 
 #endif //STLLEARN_BST_H
