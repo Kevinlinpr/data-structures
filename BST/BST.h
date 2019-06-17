@@ -18,6 +18,7 @@ public:
     BSTNode<T>* right_child_node;
     bool operator==(BSTNode<T>* bstNode);
     bool operator!=(BSTNode<T>* bstNode);
+    bool operator>(BSTNode<T>* bstNode);
 };
 
 template<class T>
@@ -29,6 +30,8 @@ BSTNode<T>::BSTNode(T value) {
 
 template<class T>
 bool BSTNode<T>::operator==(BSTNode<T> *bstNode) {
+    if(bstNode == nullptr)
+        return false;
     return this->data == bstNode->data
            &&this->left_child_node == bstNode->left_child_node
            &&this->right_child_node == bstNode->right_child_node;
@@ -36,9 +39,18 @@ bool BSTNode<T>::operator==(BSTNode<T> *bstNode) {
 
 template<class T>
 bool BSTNode<T>::operator!=(BSTNode<T> *bstNode) {
+    if(bstNode == nullptr)
+        return false;
     return this->data != bstNode->data
            ||this->left_child_node != bstNode->left_child_node
            ||this->right_child_node != bstNode->right_child_node;
+}
+
+template<class T>
+bool BSTNode<T>::operator>(BSTNode<T> *bstNode) {
+    if(bstNode == nullptr)
+        return true;
+    return this->data>bstNode->data;
 }
 
 
@@ -223,11 +235,31 @@ void BST<T>::InOrderPrint() const {
     BSTNode<T>* historyPrintNode = nullptr;//历史打印节点
     while(!adjustStack.empty()){
         //解压节点，按照（右子节点）-》（父节点）-》（左子节点）的顺序进行放入，因为栈是LIFO
+        BSTNode<T>* fatherNode = adjustStack.top();
+        adjustStack.pop();
+        BSTNode<T>* leftNode = fatherNode->left_child_node;
+        BSTNode<T>* rightNode = fatherNode->right_child_node;
         //当栈顶元素与右子节点不等时，加入右子节点
+        if(adjustStack.empty()){
+          if(rightNode)
+              adjustStack.push(rightNode);
+        } else{
+            BSTNode<T>* topNode = adjustStack.top();
+            if(rightNode&&topNode->operator!=(rightNode))
+                adjustStack.push(rightNode);
+        }
         //加入父节点
+        adjustStack.push(fatherNode);
         //当左节点数值大于历史打印节点数值时，加入左节点
+        if(leftNode&&leftNode->operator>(historyPrintNode))
+            adjustStack.push(leftNode);
         //当栈顶元素等于父节点，打印并更新历史打印节点
-
+        BSTNode<T>* topNodeAfterDecompression = adjustStack.top();
+        if(topNodeAfterDecompression->operator==(fatherNode)){
+            std::cout<<topNodeAfterDecompression->data<<" ";
+            historyPrintNode = topNodeAfterDecompression;
+            adjustStack.pop();
+        }
     }
     std::cout<<std::endl;
     std::cout<<"=== END IN ORDER PRINT ==="<<std::endl<<std::endl;
