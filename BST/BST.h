@@ -16,6 +16,7 @@ public:
     T data;
     BSTNode<T>* left_child_node;
     BSTNode<T>* right_child_node;
+    bool operator==(BSTNode<T>* bstNode);
     bool operator!=(BSTNode<T>* bstNode);
 };
 
@@ -27,9 +28,19 @@ BSTNode<T>::BSTNode(T value) {
 }
 
 template<class T>
-bool BSTNode<T>::operator!=(BSTNode<T> *bstNode) {
-    return this->data != bstNode->data;
+bool BSTNode<T>::operator==(BSTNode<T> *bstNode) {
+    return this->data == bstNode->data
+           &&this->left_child_node == bstNode->left_child_node
+           &&this->right_child_node == bstNode->right_child_node;
 }
+
+template<class T>
+bool BSTNode<T>::operator!=(BSTNode<T> *bstNode) {
+    return this->data != bstNode->data
+           ||this->left_child_node != bstNode->left_child_node
+           ||this->right_child_node != bstNode->right_child_node;
+}
+
 
 template <class T>
 class BST {
@@ -163,7 +174,7 @@ void BST<T>::DepthFirstPrint() const {
         std::cout<<copeNode->data<<" ";
     }
     std::cout<<std::endl;
-    std::cout<<"=== END DEPTH FIRST PRINT ==="<<std::endl;
+    std::cout<<"=== END DEPTH FIRST PRINT ==="<<std::endl<<std::endl;
 }
 
 /// 前序遍历
@@ -184,6 +195,7 @@ void BST<T>::PreOrderPrint() const {
         std::cout<<"PLEASE CHECK IF THIS IS A BST"<<std::endl;
         return;
     }
+    std::cout<<"=== START PRE ORDER PRINT ==="<<std::endl;
     std::cout<<this->root_node->data<<" ";
     while(!adjustStack.empty()){
         BSTNode<T>* outletNode = adjustStack.top();
@@ -195,12 +207,30 @@ void BST<T>::PreOrderPrint() const {
             adjustStack.push(outletNode->left_child_node);
     }
     std::cout<<std::endl;
-    std::cout<<"PRINT FINISHED."<<std::endl;
+    std::cout<<"=== END PRE ORDER PRINT ==="<<std::endl<<std::endl;
 }
 
 template<class T>
 void BST<T>::InOrderPrint() const {
+    std::stack<BSTNode<T>*> adjustStack;
+    if(this->root_node)
+        adjustStack.push(this->root_node);
+    if(adjustStack.size()<=0){
+        std::cout<<"PLEASE CHECK IF THIS IS A BST"<<std::endl;
+        return;
+    }
+    std::cout<<"=== START IN ORDER PRINT ==="<<std::endl;
+    BSTNode<T>* historyPrintNode = nullptr;//历史打印节点
+    while(!adjustStack.empty()){
+        //解压节点，按照（右子节点）-》（父节点）-》（左子节点）的顺序进行放入，因为栈是LIFO
+        //当栈顶元素与右子节点不等时，加入右子节点
+        //加入父节点
+        //当左节点数值大于历史打印节点数值时，加入左节点
+        //当栈顶元素等于父节点，打印并更新历史打印节点
 
+    }
+    std::cout<<std::endl;
+    std::cout<<"=== END IN ORDER PRINT ==="<<std::endl<<std::endl;
 }
 
 template<class T>
