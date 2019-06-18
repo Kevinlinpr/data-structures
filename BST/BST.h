@@ -199,24 +199,34 @@ void BST<T>::DepthFirstPrint() const {
 template<class T>
 void BST<T>::PreOrderPrint() const {
     std::stack<BSTNode<T>*> adjustStack;
-    if(this->root_node->right_child_node)
-        adjustStack.push(this->root_node->right_child_node);
-    if(this->root_node->left_child_node)
-        adjustStack.push(this->root_node->left_child_node);
+    if(this->root_node)
+        adjustStack.push(this->root_node);
     if(adjustStack.size()<=0){
         std::cout<<"PLEASE CHECK IF THIS IS A BST"<<std::endl;
         return;
     }
     std::cout<<"=== START PRE ORDER PRINT ==="<<std::endl;
-    std::cout<<this->root_node->data<<" ";
     while(!adjustStack.empty()){
-        BSTNode<T>* outletNode = adjustStack.top();
-        std::cout<<outletNode->data<<" ";
+        //解压节点
+        //按照VLR（NLR）的逆序进栈，（右节点）-》（左节点）-》（父节点），因为栈的特点LIFO
+        BSTNode<T>* fatherNode = adjustStack.top();
         adjustStack.pop();
-        if(outletNode->right_child_node)
-            adjustStack.push(outletNode->right_child_node);
-        if(outletNode->left_child_node)
-            adjustStack.push(outletNode->left_child_node);
+        BSTNode<T>* rightNode = fatherNode->right_child_node;
+        BSTNode<T>* leftNode = fatherNode->left_child_node;
+        //右节点无条件进栈
+        if(rightNode)
+            adjustStack.push(rightNode);
+        //左节点无条件进栈
+        if(leftNode)
+            adjustStack.push(leftNode);
+        //父节点无条件进栈
+        adjustStack.push(fatherNode);
+        //若栈顶等于解压节点，打印出栈
+        BSTNode<T>* topNodeAfterDecompression = adjustStack.top();
+        if(topNodeAfterDecompression->operator==(fatherNode)){
+            std::cout<<topNodeAfterDecompression->data<<" ";
+            adjustStack.pop();
+        }
     }
     std::cout<<std::endl;
     std::cout<<"=== END PRE ORDER PRINT ==="<<std::endl<<std::endl;

@@ -5,6 +5,7 @@ int main(){
     PracticeLinearList<int> practiceLinearList(data,16);
     BST<int> bst;
     bst.InitBST(practiceLinearList);
+    bst.PreOrderPrint();
     bst.InOrderPrint();
     bst.PostOrderPrint();
 }
