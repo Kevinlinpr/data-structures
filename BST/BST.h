@@ -189,7 +189,7 @@ void BST<T>::DepthFirstPrint() const {
     std::cout<<"=== END DEPTH FIRST PRINT ==="<<std::endl<<std::endl;
 }
 
-/// 前序遍历
+/// 前序遍历（栈实现）
 //int data[16] = {11,1,24,2,32,90,58,34,22,13,99,47,12,13,5,8};
 //PracticeLinearList<int> practiceLinearList(data,16);
 //BST<int> bst;
@@ -222,6 +222,13 @@ void BST<T>::PreOrderPrint() const {
     std::cout<<"=== END PRE ORDER PRINT ==="<<std::endl<<std::endl;
 }
 
+/// 中序遍历（栈实现）
+//int data[16] = {11,1,24,2,32,90,58,34,22,13,99,47,12,13,5,8};
+//PracticeLinearList<int> practiceLinearList(data,16);
+//BST<int> bst;
+//bst.InitBST(practiceLinearList);
+//bst.InOrderPrint();
+/// \tparam T
 template<class T>
 void BST<T>::InOrderPrint() const {
     std::stack<BSTNode<T>*> adjustStack;
@@ -265,9 +272,50 @@ void BST<T>::InOrderPrint() const {
     std::cout<<"=== END IN ORDER PRINT ==="<<std::endl<<std::endl;
 }
 
+/// 后序遍历（栈实现）
+//int data[16] = {11,1,24,2,32,90,58,34,22,13,99,47,12,13,5,8};
+//PracticeLinearList<int> practiceLinearList(data,16);
+//BST<int> bst;
+//bst.InitBST(practiceLinearList);
+//bst.PostOrderPrint();
+/// \tparam T
 template<class T>
 void BST<T>::PostOrderPrint() const {
-
+    std::stack<BSTNode<T>*> adjustStack;
+    if(this->root_node)
+        adjustStack.push(this->root_node);
+    if(adjustStack.size()<=0){
+        std::cout<<"PLEASE CHECK IF THIS IS A BST"<<std::endl;
+        return;
+    }
+    std::cout<<"=== START POST ORDER PRINT ==="<<std::endl;
+    BSTNode<T>* historyHighestPrintNode = nullptr;//历史最高值打印节点
+    while(!adjustStack.empty()){
+        //解压栈顶节点
+        //根据栈的LIFO的原则，按照反序的LRV（LRN）进行进栈，（父节点）-》（右节点）-》（左节点）进栈
+        BSTNode<T>* fatherNode = adjustStack.top();
+        adjustStack.pop();
+        BSTNode<T>* rightNode = fatherNode->right_child_node;
+        BSTNode<T>* leftNode = fatherNode->left_child_node;
+        //父节点无条件进栈
+        adjustStack.push(fatherNode);
+        //右节点大于historyHighestPrintNode时进栈
+        if(rightNode&&rightNode->operator>(historyHighestPrintNode))
+            adjustStack.push(rightNode);
+        //左节点大于historyHighestPrintNode时进栈
+        if(leftNode&&leftNode->operator>(historyHighestPrintNode))
+            adjustStack.push(leftNode);
+        //当栈顶元素等于父节点时，打印出栈并跟新historyHighestPrintNode
+        BSTNode<T>* topNodeAfterDecompression = adjustStack.top();
+        if(topNodeAfterDecompression->operator==(fatherNode)){
+            std::cout<<topNodeAfterDecompression->data<<" ";
+            if(topNodeAfterDecompression->operator>(historyHighestPrintNode))
+                historyHighestPrintNode = topNodeAfterDecompression;
+            adjustStack.pop();
+        }
+    }
+    std::cout<<std::endl;
+    std::cout<<"=== END POST ORDER PRINT ==="<<std::endl<<std::endl;
 }
 
 

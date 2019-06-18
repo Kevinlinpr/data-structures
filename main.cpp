@@ -6,4 +6,5 @@ int main(){
     BST<int> bst;
     bst.InitBST(practiceLinearList);
     bst.InOrderPrint();
+    bst.PostOrderPrint();
 }
