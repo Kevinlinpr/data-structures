@@ -66,6 +66,7 @@ public:
     void InOrderPrint() const;
     void PostOrderPrint() const;
     void Insert(BSTNode<T>* node);
+    void Delete(BSTNode<T>* node);
 private:
     BSTNode<T>* root_node;
 };
@@ -373,6 +374,135 @@ void BST<T>::Insert(BSTNode<T> *node) {
             }
         }
 
+    }
+}
+
+
+/// BST删除节点（没有前驱和后驱）的非线索树
+//int data[10] = {53,17,9,45,78,23,65,94,81,88};
+//PracticeLinearList<int> practiceLinearList(data,10);
+//BST<int> bst;
+//bst.InitBST(practiceLinearList);
+//bst.InOrderPrint();
+//auto * node = new BSTNode<int>(78);
+//bst.Delete(node);
+//bst.InOrderPrint();
+/// \tparam T
+/// \param node
+template<class T>
+void BST<T>::Delete(BSTNode<T> *node) {
+    //查看BST是非存在此待删除节点
+    BSTNode<T>* deleteNode = this->SearchBST(node->data);
+    if(!deleteNode){
+        std::cout<<"THIS DELETE NODE DOESN'T EXIST.PLEASE INSERT BEFORE DELETE."<<std::endl;
+        return;
+    }
+    //若存在进行删除操作，否则不执行
+    //若删除节点不存在子节点，直接删除不影响BST结构
+    BSTNode<T>* copeNode = this->root_node;
+    BSTNode<T>* predecessor = nullptr;
+    while(true){
+        //遍历查找
+        //若未找到，若待删除节点值小于当前处理值，当前操作值更新为左子节点，否则更新为右子节点
+       if(deleteNode->data<copeNode->data){
+           predecessor = copeNode;
+           copeNode = copeNode->left_child_node;
+           continue;
+       }
+       else if(copeNode->data<deleteNode->data){
+           predecessor = copeNode;
+           copeNode = copeNode->right_child_node;
+           continue;
+       }
+       else{
+           //若找到待删除节点，检测待删除节点的子节点
+           //若删除节点没有子节点
+           if(!deleteNode->left_child_node&&!deleteNode->right_child_node){
+               if(predecessor->left_child_node->operator==(deleteNode))
+                   predecessor->left_child_node = nullptr;
+               else if(predecessor->right_child_node->operator==(deleteNode))
+                   predecessor->right_child_node = nullptr;
+               break;
+           }
+           //若删除节点存在一个子节点，让删除节点的唯一子节点替换删除节点
+           if(deleteNode->left_child_node&&!deleteNode->right_child_node){
+               if(predecessor->left_child_node->operator==(deleteNode))
+                   predecessor->left_child_node = deleteNode->left_child_node;
+               else if(predecessor->right_child_node->operator==(deleteNode))
+                   predecessor->right_child_node = deleteNode->left_child_node;
+               break;
+           }
+           else if(!deleteNode->left_child_node&&deleteNode->right_child_node){
+               if(predecessor->left_child_node->operator==(deleteNode))
+                   predecessor->left_child_node = deleteNode->right_child_node;
+               else if(predecessor->right_child_node->operator==(deleteNode))
+                   predecessor->right_child_node = deleteNode->right_child_node;
+               break;
+           }
+           //若删除节点有两个节点，（目前按照中序遍历中的后驱节点作为标准）将删除节点的直接后驱替换删除节点，然后删除此直接后驱节点。
+           else{
+               //创建调整栈
+               std::stack<BSTNode<T>*> adjustStack;
+               //压入当前待删除节点
+               adjustStack.push(deleteNode->right_child_node);
+               BSTNode<T>* historyPrintNode = deleteNode;//历史打印节点
+               while(!adjustStack.empty()){
+                   //解压节点
+                   BSTNode<T>* fatherNode = adjustStack.top();
+                   adjustStack.pop();
+                   BSTNode<T>* leftNode = fatherNode->left_child_node;
+                   BSTNode<T>* rightNode = fatherNode->right_child_node;
+                   //将解压节点按照中序遍历顺序LVR的逆序进栈
+                   //当栈顶不等于右子节点时，右节点进栈
+                   if(adjustStack.empty()){
+                       if(rightNode)
+                           adjustStack.push(rightNode);
+                   }else{
+                       if(rightNode&&rightNode->operator!=(adjustStack.top())){
+                           adjustStack.push(rightNode);
+                       }
+                   }
+                   //父节点进栈
+                   adjustStack.push(fatherNode);
+                   //当左节点大于历史打印节点时，左节点进栈
+                   if(leftNode&&leftNode->operator>(historyPrintNode))
+                       adjustStack.push(leftNode);
+                   BSTNode<T>* topNodeAfterDecompression = adjustStack.top();
+                   //当栈顶等父节点时，代表栈顶节点是待删除节点前驱节点的直接后继节点，创建值等于直接后驱节点的新节点然后替换待删除节点，删除直接后驱节点。
+                   if(fatherNode->operator==(topNodeAfterDecompression)){
+                       auto * newNode = new BSTNode<T>(topNodeAfterDecompression->data);
+                       if(predecessor->left_child_node->operator==(deleteNode))
+                           predecessor->left_child_node = newNode;
+                       else if(predecessor->right_child_node->operator==(deleteNode))
+                           predecessor->right_child_node = newNode;
+                       newNode->left_child_node = deleteNode->left_child_node;
+                       newNode->right_child_node = deleteNode->right_child_node;
+                       std::queue<BSTNode<T>*> adjustQueue;
+                       adjustQueue.push(newNode);
+                       while(!adjustQueue.empty()){
+                           BSTNode<T>* front = adjustQueue.front();
+                           adjustQueue.pop();
+                           if(front->left_child_node){
+                               if(front->left_child_node->operator==(topNodeAfterDecompression)){
+                                   front->left_child_node = topNodeAfterDecompression->right_child_node;
+                                   break;
+                               }else
+                                   adjustQueue.push(front->left_child_node);
+                           }
+                           if(front->right_child_node){
+                               if(front->right_child_node->operator==(topNodeAfterDecompression)){
+                                   front->right_child_node = topNodeAfterDecompression->right_child_node;
+                                   break;
+                               }else
+                                   adjustQueue.push(front->right_child_node);
+                           }
+                       }
+                       break;
+                   }
+               }
+               break;
+           }
+       }
     }
 }
 
