@@ -65,6 +65,7 @@ public:
     void PreOrderPrint() const;
     void InOrderPrint() const;
     void PostOrderPrint() const;
+    void Insert(BSTNode<T>* node);
 private:
     BSTNode<T>* root_node;
 };
@@ -326,6 +327,53 @@ void BST<T>::PostOrderPrint() const {
     }
     std::cout<<std::endl;
     std::cout<<"=== END POST ORDER PRINT ==="<<std::endl<<std::endl;
+}
+
+/// 二叉搜索树的插入
+//int data[16] = {11,1,24,2,32,90,58,34,22,13,99,47,12,13,5,8};
+//PracticeLinearList<int> practiceLinearList(data,16);
+//BST<int> bst;
+//bst.InitBST(practiceLinearList);
+//bst.InOrderPrint();
+//auto * node = new BSTNode<int>(23);
+//bst.Insert(node);
+//bst.InOrderPrint();
+/// \tparam T
+/// \param node
+template<class T>
+void BST<T>::Insert(BSTNode<T> *node) {
+    //判断插入值是否已经存在
+    if(this->SearchBST(node->data)){
+        std::cout<<"IT ALREADY EXIT!"<<std::endl;
+        return;
+    }
+    //若存在就不插入
+    //若不存在再进行插入操作
+
+    //若BST为空，直接插入节点作为根节点
+    if(this->root_node== nullptr){
+        std::cout<<"THIS BST IS NULL.THIS INSERT NODE WILL BE THE ROOT NODE."<<std::endl;
+        this->root_node = node;
+    }else{
+        //若BST不为空，遍历节点，若插入值小于当前节点就插入左节点，否则插入右节点
+        BSTNode<T>* copeNode = this->root_node;
+        while(true){
+            if(node->data<copeNode->data){
+                copeNode = copeNode->left_child_node;
+            }else{
+                copeNode = copeNode->right_child_node;
+            }
+            if(!copeNode->left_child_node){
+                copeNode->left_child_node = node;
+                break;
+            }
+            if(!copeNode->right_child_node){
+                copeNode->right_child_node = node;
+                break;
+            }
+        }
+
+    }
 }
 
 
