@@ -336,7 +336,7 @@ void BST<T>::PostOrderPrint() const {
 //BST<int> bst;
 //bst.InitBST(practiceLinearList);
 //bst.InOrderPrint();
-//auto * node = new BSTNode<int>(23);
+//auto * node = new BSTNode<int>(50);
 //bst.Insert(node);
 //bst.InOrderPrint();
 /// \tparam T
@@ -364,11 +364,11 @@ void BST<T>::Insert(BSTNode<T> *node) {
             }else{
                 copeNode = copeNode->right_child_node;
             }
-            if(!copeNode->left_child_node){
+            if(!copeNode->left_child_node&&node->data<copeNode->data){
                 copeNode->left_child_node = node;
                 break;
             }
-            if(!copeNode->right_child_node){
+            if(!copeNode->right_child_node&&node->data>=copeNode->data){
                 copeNode->right_child_node = node;
                 break;
             }
