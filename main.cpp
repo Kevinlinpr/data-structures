@@ -1,16 +1,12 @@
 #include <iostream>
 #include <vector>
 #include "LinearList/PracticeLinearList.h"
-#include "BST/BST.h"
+#include "BinaryTree/BT/BT.h"
 
 
 int main(){
-    int data[16] = {11,1,24,2,32,90,58,34,22,13,99,47,12,13,5,8};
-    PracticeLinearList<int> practiceLinearList(data,16);
-    BST<int> bst;
-    bst.InitBST(practiceLinearList);
-    bst.InOrderPrint();
-    auto * node = new BSTNode<int>(50);
-    bst.Insert(node);
-    bst.InOrderPrint();
+    int pre[11]={3,88,10,12,9,73,11,32,99,1,2};
+    int in[11]={10,12,88,9,3,11,99,32,73,1,2};
+    BT<int> bt(pre,in,11);
+    std::cout<<"END CONSTRUCT."<<std::endl;
 }

@@ -5,7 +5,7 @@
 #ifndef STLLEARN_BST_H
 #define STLLEARN_BST_H
 
-#include "../LinearList/PracticeLinearList.h"
+#include "../../LinearList/PracticeLinearList.h"
 #include <queue>
 #include <stack>
 
