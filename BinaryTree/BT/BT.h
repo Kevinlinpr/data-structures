@@ -5,6 +5,12 @@
 #ifndef STLLEARN_BT_H
 #define STLLEARN_BT_H
 
+struct ConstructMethod{
+    static int PREORDER_AND_INORDER,POSTORDER_AND_INORDER;
+};
+int ConstructMethod::PREORDER_AND_INORDER = 0;
+int ConstructMethod::POSTORDER_AND_INORDER = 1;
+
 template <class T>
 class BTNode{
 public:
@@ -23,45 +29,74 @@ BTNode<T>::BTNode(T value) {
 template <class T>
 class BT{
 public:
-    BT(T* preOrder,T* inOrder,int len);
+    BT(T* order,T* inOrder,int len, int method);
 
 private:
-    BTNode<T>* Construct(T* preOrder,T* inOrder,int len);
+    BTNode<T>* ConstructPreInMethod(T* preOrder,T* inOrder,int len);
+    BTNode<T>* ConstructPostInMethod(T* postOrder,T* inOrder,int len);
     BTNode<T>* rootNode;
 };
 
 /// 二叉树构造（前序中序构造）
 //int pre[11]={3,88,10,12,9,73,11,32,99,1,2};
 //int in[11]={10,12,88,9,3,11,99,32,73,1,2};
-//BT<int> bt(pre,in,11);
+//int post[11]={12,10,9,88,99,32,11,2,1,73,3};
+//BT<int> bt_pre(pre,in,11,ConstructMethod::PREORDER_AND_INORDER);
+//BT<int> bt_pst(post,in,11,ConstructMethod::POSTORDER_AND_INORDER);
 //std::cout<<"END CONSTRUCT."<<std::endl;
 /// \tparam T
 /// \param preOrder
 /// \param inOrder
 /// \param len
 template<class T>
-BT<T>::BT(T *preOrder, T *inOrder, int len) {
-    this->rootNode = this->Construct(preOrder,inOrder,len);
+BT<T>::BT(T *order, T *inOrder, int len,int method) {
+    switch (method){
+        case 0:
+            this->rootNode = this->ConstructPreInMethod(order,inOrder,len);
+            break;
+        case 1:
+            this->rootNode = this->ConstructPostInMethod(order,inOrder,len);
+            break;
+        default:
+            break;
+    }
 }
 
 template<class T>
-BTNode<T>* BT<T>::Construct(T *preOrder, T *inOrder, int len) {
+BTNode<T>* BT<T>::ConstructPreInMethod(T *preOrder, T *inOrder, int len) {
     if(!preOrder||!inOrder||len==0)
         return nullptr;
     auto * newNode = new BTNode<T>(preOrder[0]);
     int leftAmount = 0;
-    int* rootIndex = inOrder;
+    T* rootIndex = inOrder;
     while(*rootIndex!=newNode->data&&rootIndex<=(inOrder+len-1)){
         ++rootIndex;
         ++leftAmount;
     }
     if(leftAmount>0)
-        newNode->leftNode = this->Construct(preOrder+1,inOrder,leftAmount);
+        newNode->leftNode = this->ConstructPreInMethod(preOrder+1,inOrder,leftAmount);
     if(len-leftAmount-1>0)
-        newNode->rightNode = this->Construct(preOrder+leftAmount+1,rootIndex+1,len-leftAmount-1);
+        newNode->rightNode = this->ConstructPreInMethod(preOrder+leftAmount+1,rootIndex+1,len-leftAmount-1);
     return newNode;
 }
 
+template<class T>
+BTNode<T> *BT<T>::ConstructPostInMethod(T *postOrder, T *inOrder, int len) {
+    if(!postOrder||!inOrder||len==0)
+        return nullptr;
+    auto * newNode = new BTNode<T>(postOrder[len-1]);
+    int leftAmount = 0;
+    T* rootInOrder = inOrder;
+    while(*rootInOrder!=newNode->data&&rootInOrder<(inOrder+len-1)){
+        ++rootInOrder;
+        ++leftAmount;
+    }
+    if(leftAmount>0)
+        newNode->leftNode = this->ConstructPostInMethod(postOrder,inOrder,leftAmount);
+    if(len-leftAmount-1)
+        newNode->rightNode = this->ConstructPostInMethod(postOrder+leftAmount,inOrder+leftAmount+1,len-leftAmount-1);
+    return newNode;
+}
 
 
 #endif //STLLEARN_BT_H
