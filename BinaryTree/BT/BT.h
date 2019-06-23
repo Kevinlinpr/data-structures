@@ -5,6 +5,8 @@
 #ifndef STLLEARN_BT_H
 #define STLLEARN_BT_H
 
+#include <stack>
+#include <iostream>
 struct ConstructMethod{
     static int PREORDER_AND_INORDER,POSTORDER_AND_INORDER;
 };
@@ -30,7 +32,9 @@ template <class T>
 class BT{
 public:
     BT(T* order,T* inOrder,int len, int method);
-
+    void PreOrderPrint() const;
+    void InOrderPrint() const;
+    void PostOrderPrint() const;
 private:
     BTNode<T>* ConstructPreInMethod(T* preOrder,T* inOrder,int len);
     BTNode<T>* ConstructPostInMethod(T* postOrder,T* inOrder,int len);
@@ -97,6 +101,22 @@ BTNode<T> *BT<T>::ConstructPostInMethod(T *postOrder, T *inOrder, int len) {
         newNode->rightNode = this->ConstructPostInMethod(postOrder+leftAmount,inOrder+leftAmount+1,len-leftAmount-1);
     return newNode;
 }
+
+template<class T>
+void BT<T>::PreOrderPrint() const {
+    std::stack<BTNode<T>*> adjustStack;
+    adjustStack.push(this->rootNode);
+    while(!adjustStack.empty()){
+        BTNode<T>* father = adjustStack.top();
+        adjustStack.pop();
+        std::cout<<father->data<<" ";
+        if(father->rightNode)
+            adjustStack.push(father->rightNode);
+        if(father->leftNode)
+            adjustStack.push(father->leftNode);
+    }
+}
+
 
 
 #endif //STLLEARN_BT_H
