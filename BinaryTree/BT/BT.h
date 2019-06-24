@@ -134,6 +134,34 @@ void BT<T>::InOrderPrint() const {
             root = root->rightNode;
         }
     }
+    std::cout<<std::endl;
+}
+
+template<class T>
+void BT<T>::PostOrderPrint() const {
+    std::stack<BTNode<T>*> adjustStack;
+    BTNode<T>* preNode = nullptr;
+    BTNode<T>* root = this->rootNode;
+    while(root){
+        adjustStack.push(root);
+        root = root->leftNode;
+    }
+    while(!adjustStack.empty()){
+        root = adjustStack.top();
+        adjustStack.pop();
+        if(root->rightNode == nullptr||root->rightNode == preNode){
+            std::cout<<root->data<<" ";
+            preNode = root;
+        }else{
+            adjustStack.push(root);
+            root = root->rightNode;
+            while(root){
+                adjustStack.push(root);
+                root = root->leftNode;
+            }
+        }
+    }
+    std::cout<<std::endl;
 }
 
 

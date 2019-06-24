@@ -12,5 +12,6 @@ int main(){
     BT<int> bt_pst(post,in,11,ConstructMethod::POSTORDER_AND_INORDER);
     bt_pre.PreOrderPrint();
     bt_pre.InOrderPrint();
+    bt_pre.PostOrderPrint();
     std::cout<<"END CONSTRUCT."<<std::endl;
 }
