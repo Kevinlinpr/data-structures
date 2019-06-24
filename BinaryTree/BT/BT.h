@@ -115,8 +115,26 @@ void BT<T>::PreOrderPrint() const {
         if(father->leftNode)
             adjustStack.push(father->leftNode);
     }
+    std::cout<<std::endl;
 }
 
+template<class T>
+void BT<T>::InOrderPrint() const {
+    std::stack<BTNode<T>*> adjustStack;
+    BTNode<T>* root = this->rootNode;
+    while(!adjustStack.empty()||root){
+        while(root){
+            adjustStack.push(root);
+            root = root->leftNode;
+        }
+        if(!adjustStack.empty()){
+            root = adjustStack.top();
+            adjustStack.pop();
+            std::cout<<root->data<<" ";
+            root = root->rightNode;
+        }
+    }
+}
 
 
 #endif //STLLEARN_BT_H
