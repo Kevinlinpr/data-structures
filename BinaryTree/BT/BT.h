@@ -91,7 +91,7 @@ BTNode<T> *BT<T>::ConstructPostInMethod(T *postOrder, T *inOrder, int len) {
     auto * newNode = new BTNode<T>(postOrder[len-1]);
     int leftAmount = 0;
     T* rootInOrder = inOrder;
-    while(*rootInOrder!=newNode->data&&rootInOrder<(inOrder+len-1)){
+    while(*rootInOrder!=newNode->data&&rootInOrder<=(inOrder+len-1)){
         ++rootInOrder;
         ++leftAmount;
     }

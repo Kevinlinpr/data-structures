@@ -13,5 +13,8 @@ int main(){
     bt_pre.PreOrderPrint();
     bt_pre.InOrderPrint();
     bt_pre.PostOrderPrint();
+    bt_pst.PreOrderPrint();
+    bt_pst.InOrderPrint();
+    bt_pst.PostOrderPrint();
     std::cout<<"END CONSTRUCT."<<std::endl;
 }
