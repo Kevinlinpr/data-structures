@@ -7,11 +7,11 @@
 
 #include <stack>
 #include <iostream>
-struct ConstructMethod{
-    static int PREORDER_AND_INORDER,POSTORDER_AND_INORDER;
+
+enum ConstructMethod{
+    PREORDER_AND_INORDER,
+    POSTORDER_AND_INORDER
 };
-int ConstructMethod::PREORDER_AND_INORDER = 0;
-int ConstructMethod::POSTORDER_AND_INORDER = 1;
 
 template <class T>
 class BTNode{
@@ -31,7 +31,7 @@ BTNode<T>::BTNode(T value) {
 template <class T>
 class BT{
 public:
-    BT(T* order,T* inOrder,int len, int method);
+    BT(T* order,T* inOrder,int len, ConstructMethod method);
     void PreOrderPrint() const;
     void InOrderPrint() const;
     void PostOrderPrint() const;
@@ -45,20 +45,20 @@ private:
 //int pre[11]={3,88,10,12,9,73,11,32,99,1,2};
 //int in[11]={10,12,88,9,3,11,99,32,73,1,2};
 //int post[11]={12,10,9,88,99,32,11,2,1,73,3};
-//BT<int> bt_pre(pre,in,11,ConstructMethod::PREORDER_AND_INORDER);
-//BT<int> bt_pst(post,in,11,ConstructMethod::POSTORDER_AND_INORDER);
+//BT<int> bt_pre(pre,in,11,PREORDER_AND_INORDER);
+//BT<int> bt_pst(post,in,11,POSTORDER_AND_INORDER);
 //std::cout<<"END CONSTRUCT."<<std::endl;
 /// \tparam T
 /// \param preOrder
 /// \param inOrder
 /// \param len
 template<class T>
-BT<T>::BT(T *order, T *inOrder, int len,int method) {
+BT<T>::BT(T *order, T *inOrder, int len,ConstructMethod method) {
     switch (method){
-        case 0:
+        case ConstructMethod::PREORDER_AND_INORDER:
             this->rootNode = this->ConstructPreInMethod(order,inOrder,len);
             break;
-        case 1:
+        case ConstructMethod::POSTORDER_AND_INORDER:
             this->rootNode = this->ConstructPostInMethod(order,inOrder,len);
             break;
         default:
