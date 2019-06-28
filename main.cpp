@@ -1,20 +1,27 @@
 #include <iostream>
-#include <vector>
-#include "LinearList/PracticeLinearList.h"
-#include "BinaryTree/BT/BT.h"
+#include <cstring>
 
+class Person{
+public:
+    Person(char* name,int age){
+        auto len = strlen(name);
+        this->name = new char[len+1];
+        std::strcpy(this->name,name);
+        this->age = age;
+        ++amount;
+    }
+    ~Person(){
+        delete [] this->name;
+    }
+    char* name;
+    int age;
+    static int amount;
+};
+
+int Person::amount = 0;
 
 int main(){
-    int pre[11]={3,88,10,12,9,73,11,32,99,1,2};
-    int in[11]={10,12,88,9,3,11,99,32,73,1,2};
-    int post[11]={12,10,9,88,99,32,11,2,1,73,3};
-    BT<int> bt_pre(pre,in,11,ConstructMethod::PREORDER_AND_INORDER);
-    BT<int> bt_pst(post,in,11,ConstructMethod::POSTORDER_AND_INORDER);
-    bt_pre.PreOrderPrint();
-    bt_pre.InOrderPrint();
-    bt_pre.PostOrderPrint();
-    bt_pst.PreOrderPrint();
-    bt_pst.InOrderPrint();
-    bt_pst.PostOrderPrint();
-    std::cout<<"END CONSTRUCT."<<std::endl;
+    char name[] = "chen";
+    Person person(name,10);
+    std::cout<<person.name<<":"<<person.age<<":"<< Person::amount<<std::endl;
 }
