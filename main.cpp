@@ -1,27 +1,55 @@
 #include <iostream>
 #include <cstring>
 
-class Person{
+class Clone{
 public:
-    Person(char* name,int age){
-        auto len = strlen(name);
-        this->name = new char[len+1];
-        std::strcpy(this->name,name);
-        this->age = age;
-        ++amount;
+    Clone(char* _name,int _id,float _hei,float _wei,int _age){
+        auto len = std::strlen(_name);
+        name = new char[len+1];
+        std::strcpy(name,_name);
+        identity = _id;
+        height = _hei;
+        weight = _wei;
+        age = _age;
+        ++population;
     }
-    ~Person(){
-        delete [] this->name;
+    Clone(const Clone& clone){
+        auto len = std::strlen(clone.name);
+        name = new char[len+1];
+        std::strcpy(name,clone.name);
+        identity = clone.identity;
+        height = clone.height;
+        weight = clone.weight;
+        age = clone.age;
+        ++population;
+    }
+    Clone&operator=(const Clone& clone){
+        delete [] name;
+        auto len = std::strlen(clone.name);
+        name = new char[len+1];
+        std::strcpy(name,clone.name);
+        identity = clone.identity;
+        height = clone.height;
+        weight = clone.weight;
+        age = clone.age;
+        return *this;
+    }
+    ~Clone(){
+        delete [] name;
     }
     char* name;
+    int identity;
+    float height;
+    float weight;
     int age;
-    static int amount;
+    static int population;
 };
-
-int Person::amount = 0;
-
+int Clone::population = 0;
 int main(){
-    char name[] = "chen";
-    Person person(name,10);
-    std::cout<<person.name<<":"<<person.age<<":"<< Person::amount<<std::endl;
+    Clone clone1(const_cast<char *>("chen"), 1, 175, 135, 19);
+    Clone clone2(clone1);
+    std::strcpy(clone2.name,"qiqi");
+    Clone clone3(clone2);
+    clone3 = clone1;
+    std::cout<<Clone::population<<std::endl;
 }
