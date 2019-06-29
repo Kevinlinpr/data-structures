@@ -46,12 +46,12 @@ public:
     static int population;
 };
 void PrintA(Clone clone){
-    std::cout<<clone.name<<std::endl;
-    std::cout<<Clone::population<<std::endl;
+    std::cout<<"PrintA clone.name: "<<clone.name<<std::endl;
+    std::cout<<"PrintA Clone::population: "<<Clone::population<<std::endl;
 }
 void PrintB(const Clone& clone){
-    std::cout<<clone.name<<std::endl;
-    std::cout<<Clone::population<<std::endl;
+    std::cout<<"PrintB clone.name: "<<clone.name<<std::endl;
+    std::cout<<"PrintB Clone::population: "<<Clone::population<<std::endl;
 }
 int Clone::population = 0;
 int main(){
@@ -61,7 +61,7 @@ int main(){
     Clone clone3(clone2);
     clone3 = clone1;
     PrintA(clone1);
-    std::cout<<Clone::population<<std::endl;
+    std::cout<<"main Clone::population: "<<Clone::population<<std::endl;
     PrintB(clone1);
-    std::cout<<Clone::population<<std::endl;
+    std::cout<<"main Clone::population: "<<Clone::population<<std::endl;
 }
